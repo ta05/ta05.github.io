@@ -9,3 +9,9 @@ To complete this assignment, I went through the original HTML, updated the div t
 I also took the liberty to make small styling changes to the CSS file. I changed the Benefits box to be even with the content section, and centered the text describing the benefits.
 
 I learned what it means to make an html file's elements follow a logical structure independent of styling and positioning.
+
+## URLs
+
+Horiseon-Refactor Repository: https://github.com/ta05/ta05.github.io
+
+Horiseon Website: https://ta05.github.io/Horiseon-Refactor/index.html
