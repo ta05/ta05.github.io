@@ -1,4 +1,4 @@
-#bootstrap-overrides{
+#bootstrap-overrides-body{
     background-color: rgb(39, 39, 39);
 }
 
@@ -12,10 +12,5 @@
     color: white;
     border-style: groove;
     border-color: hsl(0, 0%, 71%);
-    padding: 20px;
+    padding: 10px 20px;
 }
-
-.col-lg-5{
-    float: right;
-}
-
