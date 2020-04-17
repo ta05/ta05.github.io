@@ -1,8 +1,4 @@
 
-#bootstrap-overrides-body{
-    background-color: rgb(39, 39, 39);
-}
-
 .container{
     background-color: rgb(87, 87, 87);
     text-align: center;
@@ -13,12 +9,20 @@
     padding: 10px 20px;
 }
 
-#card-rows{
-    margin-top: 15px;
-}
-
 .card-body{
     background-color: rgb(96, 98, 119)
 }
 
+#card-rows{
+    margin-top: 15px;
+}
 
+#bootstrap-overrides-body{
+    background-color: rgb(39, 39, 39);
+}
+
+#page-title{
+    font-family: sans-serif;
+    font-size: 32px;
+    color: white
+}
