@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Password Generator</title>
+</head>
+
+<body>
+    <script>
+        
+        //set of characters available for the password
+        var charSet = "";
+
+        //password that will be generated
+        var password = "";
+
+        //set of each character type that can be added to charSet
+        var numberSet = "0123456789";
+        var lowerSet = "abcdefghijklmnopqrstuvwxyz";
+        var upperSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var specialSet = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+
+        //boolean check for each character type included in the password
+        var includesNumbers;
+        var includesLower;
+        var includesUpper;
+        var includesSpecial;
+
+        var passwordLength
+
+        passwordAttributes();
+
+        //makes sure user selects at least one of the password attributes
+        while(!(includesNumbers || includesLower || includesUpper || includesSpecial)){
+            alert("Your password attributes are invalud. Please confirm at least one of the attributes.");
+            passwordAttributes();
+        }
+
+        passwordLength = parseInt(prompt("Please enter the desired length of your password between 8 and 128 characters."));
+        
+        //password length check
+        while(passwordLength < 8 || passwordLength > 128)
+            passwordLength = parseInt(prompt("Please enter a valid length between 8 and 128 characters."));
+
+
+        for(var i = 0; i<passwordLength; i++)
+            password += charSet[Math.floor(Math.random()*charSet.length)];
+
+        var pwdDisplay = document.createElement("h1");
+        pwdDisplay.textContent = "Your password is: " + password;
+        document.body.appendChild(pwdDisplay);
+
+        function passwordAttributes() {
+            includesNumbers = confirm("Would you like numerical values in your password?");
+            if(includesNumbers)
+                charSet += numberSet;
+
+            includesLower = confirm("Would you like lowercase letters in your password?");
+            if(includesLower)
+                charSet += lowerSet;
+
+            includesUpper = confirm("Would you like uppercase letters in your password?");
+            if(includesUpper)
+                charSet += upperSet;
+
+            includesSpecial = confirm("Would you like special characters in your password?");
+            if(includesSpecial)
+                charSet += specialSet;
+        }
+    </script>
+
+</body>
+
+</html>
