@@ -8,6 +8,6 @@ To complete this assignment, I knew to use a generate a charset of the desired a
 
 This was a straightforward assignment, but this is one of the assignments, I plan to revisit to update and make for user-friendly by adding a form instead of alerts and prompts, for example.
 
-Password Generator Repository: https://github.com/ta05/ta05.github.io/Tolu-Bio
+Password Generator Repository: https://github.com/ta05/ta05.github.io/Password-Generator
 
-Password Generator link: https://ta05.github.io/Tolu-Bio/index.html
+Password Generator link: https://ta05.github.io/Password-Generator/index.html
