@@ -1,4 +1,4 @@
-# Homework 2 - CSS and Bootstrap Homework: Responsive Portfolio
+# Homework 3 - Javascript Homework: Password Generator
 
 ## Description
 
