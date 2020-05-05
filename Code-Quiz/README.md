@@ -21,6 +21,6 @@ The assignment helped me to actually put into practice DOM manipulation, event l
 It also helped me to improve organizing to increase readability. I generally jump around when I'm working on a problem, but as I placed my blocks of code into functions, I made a concerted effort to make the code make sense to an outside party.
 
 ## URLs
-Code Quiz Repository: https://github.com/ta05/ta05.github.io/Code-Quiz
+Code Quiz Repository: https://github.com/ta05/ta05.github.io/tree/master/Code-Quiz
 
 Code Quiz link: https://ta05.github.io/Code-Quiz/index.html
