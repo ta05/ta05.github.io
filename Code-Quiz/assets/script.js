@@ -187,6 +187,7 @@ function clearBox() {
 
 startBtn.addEventListener("click", function (event) {
     clearBox();
+    clearTimer();
     setTime();
     displayQuestion(questionNumber);
 });
