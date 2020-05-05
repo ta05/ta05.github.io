@@ -1,0 +1,17 @@
+.col-md-8 {
+    text-align: center;
+}
+
+#timer {
+    text-align: center;
+    font-size: medium;
+    color: gray;
+}
+
+#score-submit-btn {
+    text-align: right;
+}
+
+#restart-btn {
+    text-align: right;
+}
