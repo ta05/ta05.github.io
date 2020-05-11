@@ -31,9 +31,10 @@ $("#currentDay").text(currDate);
 var planner = $(".container");
 
 for (var i = 0; i < 24; i++){
-    //createEventBlock(i);
-    //createSaveBtn(i);
-    createHourBlock(i);
+    var rowTimeBlockEl = $("<div>").addClass("row time-block");
+    rowTimeBlockEl.append(createHourBlock(i), createEventBlock(i), createSaveBtn(i));
+
+    planner.append(rowTimeBlockEl);
 }
 
 function createHourBlock(index) {
@@ -42,19 +43,17 @@ function createHourBlock(index) {
 }
 
 function createEventBlock(index) {
-    var eventblockEl = $("<div>").addClass("col-md-10").attr("data-time", index);
+    var eventBlockEl = $("<textarea>").addClass("col-md-10").attr("data-time", index);
     if (index > currHour) {
-        eventblockEl.addClass("future");
+        eventBlockEl.addClass("future");
     }
     else if (index === currHour) {
-        eventblockEl.addClass("present");
+        eventBlockEl.addClass("present");
     }
     else {
-        eventblockEl.addClass("past");
+        eventBlockEl.addClass("past");
     }
-    var inputText = $("<textarea>");
-    eventblockEl.append(inputText);
-    return eventblockEl;
+    return eventBlockEl;
 }
 
 function createSaveBtn(index) {
