@@ -21,13 +21,11 @@ var currMonth = monthList[today.getMonth()];
 var currYear = today.getFullYear();
 
 var currDate = currMonth + " " + currDay + " " + currYear;
-
-var currHour = today.getHours();
-
 $("#currentDay").text(currDate);
 
 /* Timeblock Creation and Formatting */
 
+var currHour = today.getHours();
 var planner = $(".container");
 
 for (var i = 0; i < 24; i++){
@@ -44,15 +42,18 @@ function createHourBlock(index) {
 
 function createEventBlock(index) {
     var eventBlockEl = $("<textarea>").addClass("col-md-10").attr("id", "input-" + index);
-    if (index > currHour) {
-        eventBlockEl.addClass("future");
+    if (index < currHour) {
+        eventBlockEl.addClass("past");
     }
     else if (index === currHour) {
         eventBlockEl.addClass("present");
     }
     else {
-        eventBlockEl.addClass("past");
+        eventBlockEl.addClass("future");
     }
+
+    eventBlockEl.val(localStorage.getItem("event-" + index));
+    
     return eventBlockEl;
 }
 
@@ -78,9 +79,11 @@ function displayHour(index) {
     return time;
 }
 
+/* Save Button Event Listener */
+
 planner.on("click", ".saveBtn", function (event) {
     var index = $(this).val();
-    console.log($("#input-" + index).val());
+    localStorage.setItem("event-" + index, $("#input-" + index).val());
 });
 
 
