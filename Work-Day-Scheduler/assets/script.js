@@ -31,29 +31,30 @@ $("#currentDay").text(currDate);
 var planner = $(".container");
 
 for (var i = 0; i < 24; i++){
-    //createTimeBlock(i);
+    //createEventBlock(i);
     //createSaveBtn(i);
-    displayHour(i);
+    createHourBlock(i);
 }
 
 function createHourBlock(index) {
-    
+    var hourBlockEl = $("<div>").addClass("col-md-1 hour").text(displayHour(index));
+    return hourBlockEl;
 }
 
-function createTimeBlock(index) {
-    var timeblockEl = $("<div>").addClass("col-md-10").attr("data-time", index);
+function createEventBlock(index) {
+    var eventblockEl = $("<div>").addClass("col-md-10").attr("data-time", index);
     if (index > currHour) {
-        timeblockEl.addClass("future");
+        eventblockEl.addClass("future");
     }
     else if (index === currHour) {
-        timeblockEl.addClass("present");
+        eventblockEl.addClass("present");
     }
     else {
-        timeblockEl.addClass("past");
+        eventblockEl.addClass("past");
     }
     var inputText = $("<textarea>");
-    timeblockEl.append(inputText);
-    return timeblockEl;
+    eventblockEl.append(inputText);
+    return eventblockEl;
 }
 
 function createSaveBtn(index) {
@@ -75,7 +76,6 @@ function displayHour(index) {
         hour = 12;
     
     var time = hour + suffix;
-    console.log(time);
     return time;
 }
 
