@@ -31,8 +31,13 @@ $("#currentDay").text(currDate);
 var planner = $(".container");
 
 for (var i = 0; i < 24; i++){
-    createTimeBlock(i);
-    createSaveBtn(i);
+    //createTimeBlock(i);
+    //createSaveBtn(i);
+    displayHour(i);
+}
+
+function createHourBlock(index) {
+    
 }
 
 function createTimeBlock(index) {
@@ -54,6 +59,24 @@ function createTimeBlock(index) {
 function createSaveBtn(index) {
     var saveBtnEl = $("<button>").addClass("col-md-1 saveBtn").attr("value", index);
     return saveBtnEl;
+}
+
+function displayHour(index) {
+    var hour;
+    var suffix = "";
+
+    if (parseInt(index / 12) === 0)
+        suffix = "AM";
+    else
+        suffix = "PM";
+    
+    hour = index % 12;
+    if (hour === 0)
+        hour = 12;
+    
+    var time = hour + suffix;
+    console.log(time);
+    return time;
 }
 
 
