@@ -43,7 +43,7 @@ function createHourBlock(index) {
 }
 
 function createEventBlock(index) {
-    var eventBlockEl = $("<textarea>").addClass("col-md-10").attr("data-time", index);
+    var eventBlockEl = $("<textarea>").addClass("col-md-10").attr("id", "input-" + index);
     if (index > currHour) {
         eventBlockEl.addClass("future");
     }
@@ -79,7 +79,8 @@ function displayHour(index) {
 }
 
 planner.on("click", ".saveBtn", function (event) {
-    console.log($(this).val());
+    var index = $(this).val();
+    console.log($("#input-" + index).val());
 });
 
 
