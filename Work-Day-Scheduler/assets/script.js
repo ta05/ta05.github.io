@@ -57,7 +57,7 @@ function createEventBlock(index) {
 }
 
 function createSaveBtn(index) {
-    var saveBtnEl = $("<button>").addClass("col-md-1 saveBtn").attr("value", index);
+    var saveBtnEl = $("<button>").addClass("col-md-1 saveBtn").val(index);
     return saveBtnEl;
 }
 
@@ -77,5 +77,9 @@ function displayHour(index) {
     var time = hour + suffix;
     return time;
 }
+
+planner.on("click", ".saveBtn", function (event) {
+    console.log($(this).val());
+});
 
 
