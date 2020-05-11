@@ -28,25 +28,32 @@ $("#currentDay").text(currDate);
 
 /* Timeblock Creation and Formatting */
 
+var planner = $(".container");
 
 for (var i = 0; i < 24; i++){
     createTimeBlock(i);
+    createSaveBtn(i);
 }
 
 function createTimeBlock(index) {
-    var timeblock = $("<div>").addClass("col-md-10 jumbotron").attr("data-time", index);
+    var timeblockEl = $("<div>").addClass("col-md-10").attr("data-time", index);
     if (index > currHour) {
-        timeblock.addClass("future");
+        timeblockEl.addClass("future");
     }
     else if (index === currHour) {
-        timeblock.addClass("present");
+        timeblockEl.addClass("present");
     }
     else {
-        timeblock.addClass("past");
+        timeblockEl.addClass("past");
     }
     var inputText = $("<textarea>");
-    timeblock.append(inputText);
-    return timeblock;
+    timeblockEl.append(inputText);
+    return timeblockEl;
+}
+
+function createSaveBtn(index) {
+    var saveBtnEl = $("<button>").addClass("col-md-1 saveBtn").attr("value", index);
+    return saveBtnEl;
 }
 
 
