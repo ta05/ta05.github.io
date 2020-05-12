@@ -58,7 +58,7 @@ function createEventBlock(index) {
 }
 
 function createSaveBtn(index) {
-    var saveBtnEl = $("<button>").addClass("col-md-1 saveBtn").val(index);
+    var saveBtnEl = $("<button>").addClass("col-md-1 saveBtn fas fa-save").val(index);
     return saveBtnEl;
 }
 
