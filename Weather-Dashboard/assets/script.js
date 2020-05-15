@@ -18,10 +18,10 @@ var forecastEl = $("forecast");
 var currentWeatherQueryURL;
 var fiveDayForecastQueryURL;
 
-var today = new Date();
-var currDay = today.getDate();
-var currMonth = today.getMonth() + 1;
-var currYear = today.getFullYear();
+var today;
+var currDay;
+var currMonth;
+var currYear;
 
 initialize();
 
@@ -35,6 +35,7 @@ function initialize() {
     currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
     fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
 
+    setDate();
     setCurrentWeather();
     setFiveDayForecast()
 }
@@ -68,11 +69,15 @@ function setCurrentWeather() {
 function setFiveDayForecast() {
     forecastEl.empty();
     var headEl = $("<h1>").text("5-Day Forecast");
+
+
+    
     $.ajax({
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function(response) {
         console.log(response);
+        console.log(today.getHours());
 
     });
 }
@@ -85,6 +90,13 @@ function kelvinToFahrenheit(tempK) {
 function convertSpeed(mps) {
     mph = mps * 3600 / 1609.34;
     return mph;
+}
+
+function setDate() {
+    today = new Date();
+    currDay = today.getDate();
+    currMonth = today.getMonth() + 1;
+    currYear = today.getFullYear();
 }
 
 function formatDate(day, month, year) {
