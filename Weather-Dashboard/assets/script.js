@@ -13,8 +13,10 @@ var cityList = [
 ]
 
 var weatherTodayEl = $("#data-today");
+var forecastEl = $("forecast");
 
-var queryURL;
+var currentWeatherQueryURL;
+var fiveDayForecastQueryURL;
 
 var today = new Date();
 var currDay = today.getDate();
@@ -30,33 +32,47 @@ function initialize() {
         cityList = JSON.parse(localStorage.getItem("cityList")).concat(cityList).splice(0, 8);
         cityName = cityList[0];
     }
-    queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=" + APIKey;
+    currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+    fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
 
     setCurrentWeather();
+    setFiveDayForecast()
 }
 
 function setCurrentWeather() {
     weatherTodayEl.empty();
     var date = "(" + formatDate(currDay, currMonth, currYear) + ")";
     $.ajax({
-        url: queryURL,
+        url: currentWeatherQueryURL,
         method: "GET"
     }).then(function(response) {
 
         cityName = response.name;
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
         var humidity = response.main.humidity;
-        var windSpeed = response.wind.speed;
+        var windSpeed = convertSpeed(response.wind.speed).toFixed(1);
         var uvIndex;
         console.log(response);
 
         var headEl = $("<h1>").html(cityName + " " + date);
         
-        var tempEl = $("<p>").text("Temperature: " + temperature + " F");
+        var tempEl = $("<p>").html("Temperature: " + temperature + "&#176F");
         var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
         var windSpeedEl = $("<p>").text("Wind Speed: " + windSpeed + " mph");
-        
+
         weatherTodayEl.append(headEl, tempEl, humidityEl, windSpeedEl);
+
+    });
+}
+
+function setFiveDayForecast() {
+    forecastEl.empty();
+    var headEl = $("<h1>").text("5-Day Forecast");
+    $.ajax({
+        url: fiveDayForecastQueryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
 
     });
 }
@@ -64,6 +80,11 @@ function setCurrentWeather() {
 function kelvinToFahrenheit(tempK) {
     tempF = (tempK - 273.15) * 1.80 + 32;
     return tempF;
+}
+
+function convertSpeed(mps) {
+    mph = mps * 3600 / 1609.34;
+    return mph;
 }
 
 function formatDate(day, month, year) {
