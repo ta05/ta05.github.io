@@ -34,7 +34,7 @@ function initialize() {
 
     setDate();
     setCurrentWeather();
-    setFiveDayForecast()
+    setFiveDayForecast();
 }
 
 function setCurrentWeather() {
@@ -46,6 +46,7 @@ function setCurrentWeather() {
     }).then(function(response) {
 
         cityName = response.name;
+        var icon = response.weather[0].icon;
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
         var humidity = response.main.humidity;
         var windSpeed = convertSpeed(response.wind.speed).toFixed(1);
@@ -53,7 +54,7 @@ function setCurrentWeather() {
         console.log(response);
 
         var headEl = $("<h1>").html(cityName + " " + date);
-        
+        var iconEl;
         var tempEl = $("<p>").html("Temperature: " + temperature + "&#176F");
         var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
         var windSpeedEl = $("<p>").text("Wind Speed: " + windSpeed + " mph");
@@ -85,8 +86,6 @@ function setFiveDayForecast() {
             
             timeIndex += 8;
         }
-        
-
     });
 }
 
@@ -109,7 +108,11 @@ function formatDate(date) {
 }
 
 function createForecastCard(date, icon, temperature, humidity) {
-    var cardDiv = $("<div>").attr("class", "col-md card text-white bg-primary mb-3", "style", "max-width: 18rem");
+    var cardDiv = $("<div>").attr({
+        "class": "col-md card text-white bg-primary mb-3",
+        "style": "max-width: 18rem",
+        "id": "forecast-card"
+    });
     var cardBody = $("<div>").addClass("class", "card-body");
 
     var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
