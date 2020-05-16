@@ -13,15 +13,12 @@ var cityList = [
 ]
 
 var weatherTodayEl = $("#data-today");
-var forecastEl = $("forecast");
+var forecastEl = $("#five-day-row");
 
 var currentWeatherQueryURL;
 var fiveDayForecastQueryURL;
 
 var today;
-var currDay;
-var currMonth;
-var currYear;
 
 initialize();
 
@@ -42,7 +39,7 @@ function initialize() {
 
 function setCurrentWeather() {
     weatherTodayEl.empty();
-    var date = "(" + formatDate(currDay, currMonth, currYear) + ")";
+    var date = "(" + formatDate(today) + ")";
     $.ajax({
         url: currentWeatherQueryURL,
         method: "GET"
@@ -68,16 +65,27 @@ function setCurrentWeather() {
 
 function setFiveDayForecast() {
     forecastEl.empty();
-    var headEl = $("<h1>").text("5-Day Forecast");
-
-
-    
     $.ajax({
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function(response) {
         console.log(response);
-        console.log(today.getHours());
+        timeIndex = Math.floor(today.getHours() / 3);
+        for (var i = 0; i < 1; i++){
+            var result = response.list[timeIndex];
+
+            var date = new Date(result.dt_txt);
+            var icon = result.weather[0].icon;
+            var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
+            var humidity = result.main.humidity;
+
+            var dateEl = $("<h1>").text(formatDate(date));
+            var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
+            var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
+
+            forecastEl.append(dateEl, tempEl, humidityEl);
+        }
+        
 
     });
 }
@@ -94,11 +102,8 @@ function convertSpeed(mps) {
 
 function setDate() {
     today = new Date();
-    currDay = today.getDate();
-    currMonth = today.getMonth() + 1;
-    currYear = today.getFullYear();
 }
 
-function formatDate(day, month, year) {
-    return month + "/" + day + "/" + year;
+function formatDate(date) {
+    return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
 }
