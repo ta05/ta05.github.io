@@ -71,7 +71,7 @@ function setFiveDayForecast() {
     }).then(function(response) {
         console.log(response);
         timeIndex = Math.floor(today.getHours() / 3);
-        for (var i = 0; i < 1; i++){
+        for (var i = 0; i < 5; i++){
             var result = response.list[timeIndex];
 
             var date = new Date(result.dt_txt);
@@ -79,11 +79,11 @@ function setFiveDayForecast() {
             var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
             var humidity = result.main.humidity;
 
-            var dateEl = $("<h1>").text(formatDate(date));
-            var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
-            var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
+            var cardDiv = createForecastCard(date, icon, temperature, humidity);
 
-            forecastEl.append(dateEl, tempEl, humidityEl);
+            forecastEl.append(cardDiv);
+            
+            timeIndex += 8;
         }
         
 
@@ -106,4 +106,18 @@ function setDate() {
 
 function formatDate(date) {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+}
+
+function createForecastCard(date, icon, temperature, humidity) {
+    var cardDiv = $("<div>").attr("class", "col-md card text-white bg-primary mb-3", "style", "max-width: 18rem");
+    var cardBody = $("<div>").addClass("class", "card-body");
+
+    var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
+    var iconEl;
+    var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
+    var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
+
+    cardBody.append(dateEl, tempEl, humidityEl);
+    cardDiv.append(cardBody);
+    return cardDiv;
 }
