@@ -22,6 +22,20 @@ var today;
 
 initialize();
 
+$("#search-button").on("click", function (event) {
+    if ($("#citySearch").val().trim() !== "") {
+        cityName = $("#citySearch").val().trim();
+
+        currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+        fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+
+        setDate();
+        setCurrentWeather();
+        setFiveDayForecast();
+    }
+
+})
+
 function initialize() {
     if (localStorage.getItem("cityList") === null)
         cityName = "Houston";
