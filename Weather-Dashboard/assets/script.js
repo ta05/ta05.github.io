@@ -73,17 +73,19 @@ function setCurrentWeather() {
     }).then(function (response) {
         
         cityName = response.name;
-        var icon = response.weather[0].icon;
+        var icon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
         var humidity = response.main.humidity;
         var windSpeed = convertSpeed(response.wind.speed).toFixed(1);
         var uvIndex;
 
         var headEl = $("<h1>").html(cityName + " " + date);
-        var iconEl;
+        var iconEl = $("<img>").attr("src", icon);
         var tempEl = $("<p>").html("Temperature: " + temperature + "&#176F");
         var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
         var windSpeedEl = $("<p>").text("Wind Speed: " + windSpeed + " mph");
+
+        headEl.append(iconEl);
 
         weatherTodayEl.append(headEl, tempEl, humidityEl, windSpeedEl);
     });
@@ -94,21 +96,20 @@ function setFiveDayForecast() {
     $.ajax({
         url: fiveDayForecastQueryURL,
         method: "GET"
-    }).then(function(response) {
-        timeIndex = Math.floor(today.getHours() / 3);
-        for (var i = 0; i < 5; i++){
-            var result = response.list[timeIndex];
+    }).then(function (response) {
+        console.log(response);
+        for (var i = 7; i < 40; i+=8){
+            var result = response.list[i];
 
             var date = new Date(result.dt_txt);
-            var icon = result.weather[0].icon;
+            console.log(result.dt_txt);
+            var icon = "https://openweathermap.org/img/wn/" + result.weather[0].icon + "@2x.png";
             var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
             var humidity = result.main.humidity;
 
             var cardDiv = createForecastCard(date, icon, temperature, humidity);
 
             forecastEl.append(cardDiv);
-            
-            timeIndex += 8;
         }
     });
 }
@@ -122,11 +123,11 @@ function createForecastCard(date, icon, temperature, humidity) {
     var cardBody = $("<div>").addClass("class", "card-body");
 
     var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
-    var iconEl;
+    var iconEl = $("<img>").attr("src", icon);
     var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
     var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
 
-    cardBody.append(dateEl, tempEl, humidityEl);
+    cardBody.append(dateEl, iconEl, tempEl, humidityEl);
     cardDiv.append(cardBody);
     return cardDiv;
 }
@@ -138,7 +139,6 @@ function setCityButtons() {
 
 function adjustCityList() {
     cityName = capitalize(cityName);
-    console.log(cityName);
     if (!cityList.includes(cityName)) {
         cityList.unshift(cityName);
         adjustCityButtons(cityList.pop());
