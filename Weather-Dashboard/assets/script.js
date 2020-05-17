@@ -32,8 +32,35 @@ $("#search-button").on("click", function (event) {
         setDate();
         setCurrentWeather();
         setFiveDayForecast();
+        adjustCityList();
     }
 
+});
+
+$("#search-button").on("click", function (event) {
+    if ($("#citySearch").val().trim() !== "") {
+        cityName = $("#citySearch").val().trim();
+
+        currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+        fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+
+        setDate();
+        setCurrentWeather();
+        setFiveDayForecast();
+        adjustCityList();
+    }
+
+});
+
+$(".city-button").on("click", function (event) {
+    cityName = $(this).val();
+
+    currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+    fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+
+    setDate();
+    setCurrentWeather();
+    setFiveDayForecast();
 });
 
 function initialize() {
@@ -60,13 +87,13 @@ function setCurrentWeather() {
         method: "GET"
     }).then(function(response) {
 
+        console.log(response);
         cityName = response.name;
         var icon = response.weather[0].icon;
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
         var humidity = response.main.humidity;
         var windSpeed = convertSpeed(response.wind.speed).toFixed(1);
         var uvIndex;
-        console.log(response);
 
         var headEl = $("<h1>").html(cityName + " " + date);
         var iconEl;
@@ -75,7 +102,6 @@ function setCurrentWeather() {
         var windSpeedEl = $("<p>").text("Wind Speed: " + windSpeed + " mph");
 
         weatherTodayEl.append(headEl, tempEl, humidityEl, windSpeedEl);
-
     });
 }
 
@@ -85,7 +111,6 @@ function setFiveDayForecast() {
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function(response) {
-        console.log(response);
         timeIndex = Math.floor(today.getHours() / 3);
         for (var i = 0; i < 5; i++){
             var result = response.list[timeIndex];
@@ -123,18 +148,20 @@ function createForecastCard(date, icon, temperature, humidity) {
 }
 
 function setCityButtons() {
-    for (var i = cityList.length - 1; i > 0; i--)
-        $("#city-button-list").prepend($("<button>").addClass("col-md-8 mb-2 city-button").val(cityList[i]).text(cityList[i]));
+    for (var i = cityList.length - 1; i >= 0; i--)
+        $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityList[i]).text(cityList[i]));
 }
 
 function adjustCityList() {
-    if (!cityList.includes(cityName))
-        cityList.unshift(cityName).pop();
+    if (!cityList.includes(cityName)) {
+        cityList.unshift(cityName);
+        adjustCityButtons(cityList.pop());
+    }
 }
 
-function adjustCityButtons() {
-    $("button[value='" + cityList[cityList.length - 1] + "']").remove();
-    $("#city-button-list").prepend($("<button>").addClass("col-md-8 mb-2 city-button").val(cityName).text(cityName));
+function adjustCityButtons(removedCity) {
+    $("button[value='" + removedCity + "']").remove();
+    $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityName).text(cityName));
 }
 
 function kelvinToFahrenheit(tempK) {
