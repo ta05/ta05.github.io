@@ -37,21 +37,6 @@ $("#search-button").on("click", function (event) {
 
 });
 
-$("#search-button").on("click", function (event) {
-    if ($("#citySearch").val().trim() !== "") {
-        cityName = $("#citySearch").val().trim();
-
-        currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
-        fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
-
-        setDate();
-        setCurrentWeather();
-        setFiveDayForecast();
-        adjustCityList();
-    }
-
-});
-
 $(".city-button").on("click", function (event) {
     cityName = $(this).val();
 
@@ -85,9 +70,8 @@ function setCurrentWeather() {
     $.ajax({
         url: currentWeatherQueryURL,
         method: "GET"
-    }).then(function(response) {
-
-        console.log(response);
+    }).then(function (response) {
+        
         cityName = response.name;
         var icon = response.weather[0].icon;
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
@@ -153,6 +137,8 @@ function setCityButtons() {
 }
 
 function adjustCityList() {
+    cityName = capitalize(cityName);
+    console.log(cityName);
     if (!cityList.includes(cityName)) {
         cityList.unshift(cityName);
         adjustCityButtons(cityList.pop());
@@ -180,5 +166,10 @@ function setDate() {
 
 function formatDate(date) {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+}
+
+function capitalize(name) {
+    name = name.replace(/(^|\s)\S/g, l => l.toUpperCase());
+    return name;
 }
 
