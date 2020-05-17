@@ -4,10 +4,6 @@ label{
     padding-top: 5px;
 }
 
-button{
-    background-color: rgb(0, 174, 255);
-}
-
 .col-centered{
     float: none;
     margin: 0 auto;
@@ -24,6 +20,10 @@ button{
 #city-container{
     margin: 10px;
     background-color: rgb(238, 238, 238);
+}
+
+#search-button{
+    background-color: rgb(0, 174, 255);
 }
 
 #forecast-card{

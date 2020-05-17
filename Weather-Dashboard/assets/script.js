@@ -34,7 +34,7 @@ $("#search-button").on("click", function (event) {
         setFiveDayForecast();
     }
 
-})
+});
 
 function initialize() {
     if (localStorage.getItem("cityList") === null)
@@ -47,6 +47,7 @@ function initialize() {
     fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
 
     setDate();
+    setCityButtons();
     setCurrentWeather();
     setFiveDayForecast();
 }
@@ -103,6 +104,39 @@ function setFiveDayForecast() {
     });
 }
 
+function createForecastCard(date, icon, temperature, humidity) {
+    var cardDiv = $("<div>").attr({
+        "class": "col-md card text-white bg-primary mb-3",
+        "style": "max-width: 18rem",
+        "id": "forecast-card"
+    });
+    var cardBody = $("<div>").addClass("class", "card-body");
+
+    var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
+    var iconEl;
+    var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
+    var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
+
+    cardBody.append(dateEl, tempEl, humidityEl);
+    cardDiv.append(cardBody);
+    return cardDiv;
+}
+
+function setCityButtons() {
+    for (var i = cityList.length - 1; i > 0; i--)
+        $("#city-button-list").prepend($("<button>").addClass("col-md-8 mb-2 city-button").val(cityList[i]).text(cityList[i]));
+}
+
+function adjustCityList() {
+    if (!cityList.includes(cityName))
+        cityList.unshift(cityName).pop();
+}
+
+function adjustCityButtons() {
+    $("button[value='" + cityList[cityList.length - 1] + "']").remove();
+    $("#city-button-list").prepend($("<button>").addClass("col-md-8 mb-2 city-button").val(cityName).text(cityName));
+}
+
 function kelvinToFahrenheit(tempK) {
     tempF = (tempK - 273.15) * 1.80 + 32;
     return tempF;
@@ -121,20 +155,3 @@ function formatDate(date) {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
 }
 
-function createForecastCard(date, icon, temperature, humidity) {
-    var cardDiv = $("<div>").attr({
-        "class": "col-md card text-white bg-primary mb-3",
-        "style": "max-width: 18rem",
-        "id": "forecast-card"
-    });
-    var cardBody = $("<div>").addClass("class", "card-body");
-
-    var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
-    var iconEl;
-    var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
-    var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
-
-    cardBody.append(dateEl, tempEl, humidityEl);
-    cardDiv.append(cardBody);
-    return cardDiv;
-}
