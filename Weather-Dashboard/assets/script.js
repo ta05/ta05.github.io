@@ -46,13 +46,14 @@ $(".city-button").on("click", function (event) {
     setDate();
     setCurrentWeather();
     setFiveDayForecast();
+    adjustCityList();
 });
 
 function initialize() {
     if (localStorage.getItem("cityList") === null)
         cityName = "Houston";
     else {
-        cityList = JSON.parse(localStorage.getItem("cityList")).concat(cityList).splice(0, 8);
+        cityList = JSON.parse(localStorage.getItem("cityList")).concat(cityList).splice(0,8);
         cityName = cityList[0];
     }
     currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
@@ -97,12 +98,10 @@ function setFiveDayForecast() {
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         for (var i = 7; i < 40; i+=8){
             var result = response.list[i];
 
             var date = new Date(result.dt_txt);
-            console.log(result.dt_txt);
             var icon = "https://openweathermap.org/img/wn/" + result.weather[0].icon + "@2x.png";
             var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
             var humidity = result.main.humidity;
@@ -127,7 +126,9 @@ function createForecastCard(date, icon, temperature, humidity) {
     var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
     var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
 
-    cardBody.append(dateEl, iconEl, tempEl, humidityEl);
+    dateEl.append(iconEl);
+
+    cardBody.append(dateEl, tempEl, humidityEl);
     cardDiv.append(cardBody);
     return cardDiv;
 }
@@ -143,6 +144,11 @@ function adjustCityList() {
         cityList.unshift(cityName);
         adjustCityButtons(cityList.pop());
     }
+    else {
+        movedCity = cityList.splice(cityList.indexOf(cityName), 1);
+        cityList.unshift(cityName);
+    }
+    adjustLocalStorage();
 }
 
 function adjustCityButtons(removedCity) {
@@ -166,6 +172,11 @@ function setDate() {
 
 function formatDate(date) {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
+}
+
+function adjustLocalStorage() {
+    localStorage.removeItem("cityList");
+    localStorage.setItem("cityList", JSON.stringify(cityList));
 }
 
 function capitalize(name) {
