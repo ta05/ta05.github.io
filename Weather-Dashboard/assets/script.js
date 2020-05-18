@@ -51,7 +51,7 @@ $(".city-button").on("click", function (event) {
 
 function initialize() {
     if (localStorage.getItem("cityList") === null)
-        cityName = "Houston";
+        getLocation();
     else {
         cityList = JSON.parse(localStorage.getItem("cityList")).concat(cityList).splice(0,8);
         cityName = cityList[0];
@@ -138,6 +138,7 @@ function setCityButtons() {
         $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityList[i]).text(cityList[i]));
 }
 
+
 function adjustCityList() {
     cityName = capitalize(cityName);
     if (!cityList.includes(cityName)) {
@@ -154,6 +155,22 @@ function adjustCityList() {
 function adjustCityButtons(removedCity) {
     $("button[value='" + removedCity + "']").remove();
     $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityName).text(cityName));
+}
+
+function getCityByLocation(lat, lon) {
+    function foo(callback) {
+        $.ajax({
+            url: "https:\\api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey,
+            method: "GET",
+            success: callback
+        })
+    }
+
+    function myCallback(result) {
+        return result.name;
+    }
+
+    return foo(myCallback);
 }
 
 function kelvinToFahrenheit(tempK) {
@@ -184,3 +201,25 @@ function capitalize(name) {
     return name;
 }
 
+function getLocation() {
+    // Make sure browser supports this feature
+    if (navigator.geolocation) {
+      // Provide our showPosition() function to getCurrentPosition
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } 
+    else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+  // This will get called after getCurrentPosition()
+function showPosition(position) {
+    // Grab coordinates from the given object
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+
+    console.log(lat, lon);
+
+    // Call our next function, passing on the coordinates
+    cityName = getCityByLocation(lat, lon);
+}
