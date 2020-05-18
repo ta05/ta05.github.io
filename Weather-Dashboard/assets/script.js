@@ -52,7 +52,6 @@ function setCurrentWeather() {
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
         var humidity = response.main.humidity;
         var windSpeed = convertSpeed(response.wind.speed).toFixed(1);
-        var uvIndex;
 
         var headEl = $("<h1>").html(cityName + " " + date);
         var iconEl = $("<img>").attr("src", icon);
@@ -112,10 +111,6 @@ function createForecastCard(date, icon, temperature, humidity) {
 function setCityButtons() {
     for (var i = cityList.length - 1; i >= 0; i--)
         $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityList[i]).text(cityList[i]));
-}
-
-function setUVIndex() {
-    getLocation();
 }
 
 function setUVIndex(lat, lon) {
@@ -232,7 +227,10 @@ function showPosition(position) {
     var lon = position.coords.longitude;
 
     // Call our next function, passing on the coordinates
-    uvIndexFromGeolocation(lat, lon);
+    return {
+        lat: lat,
+        lon: lon
+    };
 }
 
 function uvIndexFromGeolocation(lat, lon) {
