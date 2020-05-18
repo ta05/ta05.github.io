@@ -22,40 +22,14 @@ var today;
 
 initialize();
 
-$("#search-button").on("click", function (event) {
-    if ($("#citySearch").val().trim() !== "") {
-        cityName = $("#citySearch").val().trim();
-
-        currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
-        fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
-
-        setDate();
-        setCurrentWeather();
-        setFiveDayForecast();
-        adjustCityList();
-    }
-
-});
-
-$(".city-button").on("click", function (event) {
-    cityName = $(this).val();
-
-    currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
-    fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
-
-    setDate();
-    setCurrentWeather();
-    setFiveDayForecast();
-    adjustCityList();
-});
-
 function initialize() {
     if (localStorage.getItem("cityList") === null)
-        getLocation();
+        cityName = "Houston"
     else {
         cityList = JSON.parse(localStorage.getItem("cityList")).concat(cityList).splice(0,8);
         cityName = cityList[0];
     }
+
     currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
     fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
 
@@ -72,7 +46,7 @@ function setCurrentWeather() {
         url: currentWeatherQueryURL,
         method: "GET"
     }).then(function (response) {
-        
+        console.log(response);
         cityName = response.name;
         var icon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
@@ -89,6 +63,8 @@ function setCurrentWeather() {
         headEl.append(iconEl);
 
         weatherTodayEl.append(headEl, tempEl, humidityEl, windSpeedEl);
+
+        setUVIndex(response.coord.lat, response.coord.lon);
     });
 }
 
@@ -138,6 +114,13 @@ function setCityButtons() {
         $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityList[i]).text(cityList[i]));
 }
 
+function setUVIndex() {
+    getLocation();
+}
+
+function setUVIndex(lat, lon) {
+    uvIndexFromGeolocation(lat, lon);
+}
 
 function adjustCityList() {
     cityName = capitalize(cityName);
@@ -157,21 +140,41 @@ function adjustCityButtons(removedCity) {
     $("#city-button-list").prepend($("<button>").addClass("col-md-12 mb-2 city-button").val(cityName).text(cityName));
 }
 
-function getCityByLocation(lat, lon) {
-    function foo(callback) {
-        $.ajax({
-            url: "https:\\api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey,
-            method: "GET",
-            success: callback
-        })
-    }
-
-    function myCallback(result) {
-        return result.name;
-    }
-
-    return foo(myCallback);
+function adjustLocalStorage() {
+    localStorage.removeItem("cityList");
+    localStorage.setItem("cityList", JSON.stringify(cityList));
 }
+
+/* On-Click Functions */
+
+$("#search-button").on("click", function (event) {
+    if ($("#citySearch").val().trim() !== "") {
+        cityName = $("#citySearch").val().trim();
+
+        currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+        fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+
+        setDate();
+        setCurrentWeather();
+        setFiveDayForecast();
+        adjustCityList();
+    }
+
+});
+
+$(".city-button").on("click", function (event) {
+    cityName = $(this).val();
+
+    currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+    fiveDayForecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+
+    setDate();
+    setCurrentWeather();
+    setFiveDayForecast();
+    adjustCityList();
+});
+
+/* Conversions and Formatting Functions */
 
 function kelvinToFahrenheit(tempK) {
     tempF = (tempK - 273.15) * 1.80 + 32;
@@ -191,15 +194,25 @@ function formatDate(date) {
     return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
 }
 
-function adjustLocalStorage() {
-    localStorage.removeItem("cityList");
-    localStorage.setItem("cityList", JSON.stringify(cityList));
-}
-
 function capitalize(name) {
     name = name.replace(/(^|\s)\S/g, l => l.toUpperCase());
     return name;
 }
+
+function uvIntensity(uv) {
+    if (uv < 3)
+        return "low";
+    else if (uv < 6)
+        return "moderate";
+    else if (uv < 8)
+        return "high";
+    else if (uv < 11)
+        return "very-high";
+    else
+        return "extreme";
+}
+
+/* Geolocation Functions */
 
 function getLocation() {
     // Make sure browser supports this feature
@@ -218,8 +231,24 @@ function showPosition(position) {
     var lat = position.coords.latitude;
     var lon = position.coords.longitude;
 
-    console.log(lat, lon);
-
     // Call our next function, passing on the coordinates
-    cityName = getCityByLocation(lat, lon);
+    uvIndexFromGeolocation(lat, lon);
+}
+
+function uvIndexFromGeolocation(lat, lon) {
+    uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=" + APIKey + "&lat=" + lat + "&lon=" + lon;
+
+    $.ajax({
+        url: uvURL,
+        method: "GET"
+    }).then(function (response) {
+
+        uv = response.value;
+
+        uvEl = $("<p>").text("UV Index: ");
+        intensityEl = $("<span>").text(uv).addClass(uvIntensity(uv)).addClass("uv-index");
+
+        uvEl.append(intensityEl);
+        weatherTodayEl.append(uvEl);
+    });
 }
