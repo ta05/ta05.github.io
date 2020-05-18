@@ -46,7 +46,6 @@ function setCurrentWeather() {
         url: currentWeatherQueryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response);
         cityName = response.name;
         var icon = "https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png";
         var temperature = kelvinToFahrenheit(response.main.temp).toFixed(0);
@@ -54,7 +53,10 @@ function setCurrentWeather() {
         var windSpeed = convertSpeed(response.wind.speed).toFixed(1);
 
         var headEl = $("<h1>").html(cityName + " " + date);
-        var iconEl = $("<img>").attr("src", icon);
+        var iconEl = $("<img>").attr({
+            "src": icon,
+            "alt": response.weather[0].description
+        });
         var tempEl = $("<p>").html("Temperature: " + temperature + "&#176F");
         var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
         var windSpeedEl = $("<p>").text("Wind Speed: " + windSpeed + " mph");
@@ -78,17 +80,18 @@ function setFiveDayForecast() {
 
             var date = new Date(result.dt_txt);
             var icon = "https://openweathermap.org/img/wn/" + result.weather[0].icon + "@2x.png";
+            var description = result.weather[0].description;
             var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
             var humidity = result.main.humidity;
 
-            var cardDiv = createForecastCard(date, icon, temperature, humidity);
+            var cardDiv = createForecastCard(date, icon, description, temperature, humidity);
 
             forecastEl.append(cardDiv);
         }
     });
 }
 
-function createForecastCard(date, icon, temperature, humidity) {
+function createForecastCard(date, icon, description,  temperature, humidity) {
     var cardDiv = $("<div>").attr({
         "class": "col-md card text-white bg-primary mb-3",
         "style": "max-width: 18rem",
@@ -97,7 +100,10 @@ function createForecastCard(date, icon, temperature, humidity) {
     var cardBody = $("<div>").addClass("class", "card-body");
 
     var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
-    var iconEl = $("<img>").attr("src", icon);
+    var iconEl = $("<img>").attr({
+        "src": icon,
+        "alt": description
+    });
     var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
     var humidityEl = $("<p>").text("Humidity: " + humidity + "%");
 
