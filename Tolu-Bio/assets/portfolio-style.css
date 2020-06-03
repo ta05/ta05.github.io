@@ -13,6 +13,17 @@
     background-color: rgb(96, 98, 119)
 }
 
+.portfolio-img{
+    width: 18 rem;
+    height: 180px;
+}
+
+.card-title{
+    color: black;
+    font-size: medium;
+    font-weight: bold;
+}
+
 #card-rows{
     margin-top: 15px;
 }
