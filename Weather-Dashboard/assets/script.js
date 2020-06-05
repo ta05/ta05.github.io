@@ -1,4 +1,3 @@
-
 var APIKey = "9f56308e6d3d8dc86ce2e3a4522aaa1c";
 var cityName = "";
 var cityList = [
