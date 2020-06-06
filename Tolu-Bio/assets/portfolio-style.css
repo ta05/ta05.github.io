@@ -4,9 +4,18 @@
     text-align: center;
     border-style: groove;
     border-color: hsl(0, 0%, 71%);
-    max-width: 650px;
+    max-width: 80vw;
     margin: auto;
     padding: 10px 20px;
+}
+@media (min-width: 812px){
+    .container{
+        max-width: 650px;
+    }
+}
+
+.card{
+    margin: auto;
 }
 
 .card-body{
