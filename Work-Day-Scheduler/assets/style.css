@@ -6,7 +6,7 @@ body {
 }
 
 p{
-    color: rgba(255, 255, 255, 0.70);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 textarea{
@@ -24,8 +24,46 @@ textarea{
     color: rgba(0, 0, 0, 0.700);
     border-radius: 0;
     border-bottom: 10px solid black;
-    background: url("./images/dawn.jpg");
-    background-position: 30% 40%; 
+}
+
+.jumbotron[data-day='1']{
+    background: url("./images/monday.jpg");
+    background-size: cover;
+    background-position: 0% 25%; 
+}
+
+.jumbotron[data-day='2']{
+    background: url("./images/tuesday.jpg");
+    background-size: cover;
+    background-position: 0% 70%; 
+}
+
+.jumbotron[data-day='3']{
+    background: url("./images/wednesday.jpg");
+    background-size: cover;
+    background-position: 0% 25%; 
+}
+
+.jumbotron[data-day='4']{
+    background: url("./images/thursday.jpg");
+    background-size: cover;
+    background-position: 0% 35%; 
+}
+
+.jumbotron[data-day='5']{
+    background: url("./images/friday.jpg");
+    background-size: cover;
+    background-position: 0% 35%; 
+}
+.jumbotron[data-day='6']{
+    background: url("./images/saturday.jpg");
+    background-size: cover;
+    background-position: 0% 25%; 
+}
+.jumbotron[data-day='7']{
+    background: url("./images/sunday.jpg");
+    background-size: cover;
+    background-position: 0% 22%; 
 }
 
 .description{

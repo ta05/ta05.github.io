@@ -35,6 +35,8 @@ var currYear = today.getFullYear();
 var currDate = currWeekday + " " + currMonth + " " + currDay + " " + currYear;
 $("#currentDay").text(currDate);
 
+$(".jumbotron").attr("data-day", currDay);
+
 /* Timeblock Creation and Formatting */
 
 var currHour = today.getHours();
