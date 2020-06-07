@@ -25,11 +25,28 @@
     }
 }
 
+/* About Me Page Styling */
 .profile-img{
+    text-align: center;
+    margin: auto;
     padding-right: 5px;
-    width: 100%
+    
 }
 
+.tolu-2012{
+    margin: auto;
+    border-radius: 8px;
+    border-color: hsla(0, 0%, 86%, 0.767);
+    border-width: 2px;
+    border-style: solid;
+    border
+}
+
+.bio-text {
+    padding: 5px;
+}
+
+/* Contact Form Page Styling */
 #submit-btn{
     text-align: center;
 }
