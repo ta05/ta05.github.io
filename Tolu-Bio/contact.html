@@ -22,7 +22,7 @@
     <!--Navbar-->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand">Tolu Alimi</a>
+        <a class="navbar-brand" href="./index.html">Tolu Alimi</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -46,25 +46,25 @@
             <div class="form-group row">
                 <label for="Senders-Name" class="col-sm-1 col-form-label">Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="name">
+                    <input type="text" class="input-label" name="name" placeholder="Some Name">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="Senders-Email" class="col-sm-1 col-form-label">Email:</label>
                 <div class="col-sm-10">
-                    <input type="text" name="mail">
+                    <input type="text" class="input-label" name="mail" placeholder="somename@example.com">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="Message" class="col-sm-1 col-form-label">Message:</label>
                 <div class="col-sm-11">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="8" placeholder="Message"></textarea>
                 </div>
             </div>
 
-            <input class="offset-sm-11 col-sm-1" type="submit" value="Send">
+            <button id="submit-btn" class="offset-sm-10 col-sm-2" type="submit" value="Send">Send</button>
         </form>
     </main>
 
