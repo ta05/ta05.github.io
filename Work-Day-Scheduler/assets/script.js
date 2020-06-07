@@ -1,6 +1,17 @@
 /* Current Day Display */
 
 var today = new Date();
+
+var weekdayList = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturdayy"
+];
+
 var monthList = [
     "January",
     "February",
@@ -17,10 +28,11 @@ var monthList = [
 ];
 
 var currDay = today.getDate();
+var currWeekday = weekdayList[today.getDay()];
 var currMonth = monthList[today.getMonth()];
 var currYear = today.getFullYear();
 
-var currDate = currMonth + " " + currDay + " " + currYear;
+var currDate = currWeekday + " " + currMonth + " " + currDay + " " + currYear;
 $("#currentDay").text(currDate);
 
 /* Timeblock Creation and Formatting */
