@@ -92,16 +92,16 @@ function setFiveDayForecast() {
 
 function createForecastCard(date, icon, description,  temperature, humidity) {
     var cardDiv = $("<div>").attr({
-        "class": "col-md card text-white bg-primary mb-3",
-        "style": "max-width: 18rem",
-        "id": "forecast-card"
+        "class": "col-md card text-white mb-3 forecast-card",
+        "style": "max-width: 18rem"
     });
     var cardBody = $("<div>").addClass("class", "card-body");
 
     var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
     var iconEl = $("<img>").attr({
         "src": icon,
-        "alt": description
+        "alt": description,
+        "class": "weather-icon img-fluid"
     });
     var tempEl = $("<p>").html("Temp: " + temperature + "&#176F");
     var humidityEl = $("<p>").text("Humidity: " + humidity + "%");

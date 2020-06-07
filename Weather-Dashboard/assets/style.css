@@ -1,10 +1,15 @@
+body{
+    background-color: skyblue;
+}
+
 label{
     font-weight: bold;
     font-size: large;
     padding-top: 5px;
 }
 
-.col-centered{
+/* Styling for Dashboard Header */
+.weather-header{
     float: none;
     margin: 0 auto;
     text-align: center;
@@ -12,16 +17,57 @@ label{
     color: white;
 }
 
-.card-date{
-    font-weight: bold;
-    font-size: large;
+/* Styling for container with city list and search */
+#city-container{
+    margin: 10px;
+    background-color: rgb(238, 238, 238, 0.8);
 }
 
+#search-button{
+    background-color: rgb(0, 174, 255);
+}
+
+/* Styling for entire weather container */
+#weather-view{
+    margin: 10px 0px;
+}
+
+/* Styling for current weather and 5-day forecast divs */ 
+#data-today,
+#forecast{
+    border-bottom: rgb(238, 238, 238) solid 2px;
+    background-color: rgb(238, 238, 238, 0.4);
+} @media(max-width: 767px){
+    #forecast{
+        text-align: center;
+    }
+    #data-today,
+    #forecast{
+        max-width: 90vw;
+}
+
+}
+
+/* Styling for UV Index span */
 .uv-index{
     font-weight: bold;
     padding: 5px;
 }
 
+/* Styling for the forecast cards */
+.forecast-card{
+    margin: 10px;
+    text-align: center;
+    background-color: steelblue;
+}
+
+/* Styling for the date */
+.card-date{
+    font-weight: bold;
+    font-size: large;
+}
+
+/* Styling for UV Index Value */
 .low{
     background-color: green;
     color: white;
@@ -45,22 +91,4 @@ label{
 .extreme{
     background-color: violet;
     color: white;
-}
-
-#city-container{
-    margin: 10px;
-    background-color: rgb(238, 238, 238);
-}
-
-#search-button{
-    background-color: rgb(0, 174, 255);
-}
-
-#forecast-card{
-    margin: 10px;
-    text-align: center;
-}
-
-#data-today{
-    border-bottom: rgb(238, 238, 238) solid 2px;
 }
