@@ -23,14 +23,23 @@
 }
 
 .portfolio-img{
-    width: 18 rem;
-    height: 180px;
+    width: 16 rem;
+    height: 9 rem;
 }
 
-.card-title{
+.project-sites{
+    height: 28px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+}
+
+.site-link{
     color: black;
     font-size: medium;
-    font-weight: bold;
 }
 
 #card-rows{
