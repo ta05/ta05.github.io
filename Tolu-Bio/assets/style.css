@@ -51,10 +51,15 @@
     border-color: hsla(0, 0%, 86%, 0.767);
     border-width: 2px;
     border-style: solid;
+} @media(max-width: 574px){
+    .tolu-2012{
+        max-width: 50vw
+    }
 }
 
 .bio-text {
     padding: 5px;
+    padding-left: 15px;
 }
 
 /* Contact Form Page Styling */
