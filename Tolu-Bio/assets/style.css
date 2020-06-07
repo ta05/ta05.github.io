@@ -8,9 +8,6 @@
     font-size: 32px;
 }
 
-.about-me{
-    padding: 10px
-}
 .container{
     background-color: rgb(87, 87, 87);
     color: white;
@@ -26,6 +23,11 @@
 }
 
 /* About Me Page Styling */
+
+.about-me{
+    padding: 10px
+}
+
 .profile-img{
     text-align: center;
     margin: auto;
@@ -39,7 +41,6 @@
     border-color: hsla(0, 0%, 86%, 0.767);
     border-width: 2px;
     border-style: solid;
-    border
 }
 
 .bio-text {
