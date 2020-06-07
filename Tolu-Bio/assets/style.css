@@ -22,6 +22,16 @@
     }
 }
 
+.icon-link{
+    padding: 0px 20px;
+    font-size: 20px;
+}
+
+#github-icon,
+#linkedin-icon{
+    color: rgb(22, 22, 49)
+}
+
 /* About Me Page Styling */
 
 .about-me{
