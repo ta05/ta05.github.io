@@ -23,6 +23,6 @@ Work Day Scheduler Repository: https://github.com/ta05/ta05.github.io/tree/maste
 
 Work Day Scheduler Link: https://ta05.github.io/Work-Day-Scheduler/index.html
 
-### Credits
+## Credits
 
 Credit to Wallpaper Access (https://wallpaperaccess.com/horizon-zero-dawn-1440p) where I got most of the background images.
