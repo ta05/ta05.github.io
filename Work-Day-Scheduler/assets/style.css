@@ -2,6 +2,11 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     line-height: 1;
+    background-color: rgb(235, 235, 141);
+}
+
+p{
+    color: rgba(255, 255, 255, 0.60);
 }
 
 textarea{
@@ -16,9 +21,11 @@ textarea{
 .jumbotron {
     text-align: center;
     background-color: transparent;
-    color: black;
+    color: rgba(0, 0, 0, 0.700);
     border-radius: 0;
     border-bottom: 10px solid black;
+    background: url("./images/dawn.jpg");
+    background-position: 30% 40%; 
 }
 
 .description{
