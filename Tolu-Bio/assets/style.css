@@ -57,9 +57,13 @@
     }
 }
 
-.bio-text {
+.bio {
     padding: 5px;
     padding-left: 15px;
+}
+
+.bio-text{
+    text-align: justify;
 }
 
 /* Contact Form Page Styling */
