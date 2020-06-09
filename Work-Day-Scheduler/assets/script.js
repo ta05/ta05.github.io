@@ -9,7 +9,7 @@ var weekdayList = [
     "Wednesday",
     "Thursday",
     "Friday",
-    "Saturdayy"
+    "Saturday"
 ];
 
 var monthList = [
@@ -35,7 +35,7 @@ var currYear = today.getFullYear();
 var currDate = currWeekday + " " + currMonth + " " + currDay + " " + currYear;
 $("#currentDay").text(currDate);
 
-$(".jumbotron").attr("data-day", currDay);
+$(".jumbotron").attr("data-day", today.getDay());
 
 /* Timeblock Creation and Formatting */
 
