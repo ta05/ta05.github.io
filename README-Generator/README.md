@@ -1,8 +1,8 @@
-#  ReadMe Generator
+#  readme generator
 
 ## Description
 
-A command line application that will dynamically generate a high quality readme through the user's input.
+a command line application that generates a high quality readme from the user's inputs
 
 ## Table of Contents
 
@@ -13,3 +13,20 @@ A command line application that will dynamically generate a high quality readme 
 -   [Contributing](#contributing)
 -   [Tests](#tests)
 -   [Questions](#questions)
+
+## Installation
+
+install node.js install a terminal that can run node commands. go to the readme generator folder in the terminal. run node index.js
+
+## Usage
+
+used to generate a readme
+
+## Contributing
+
+none
+
+## Tests
+
+none
+

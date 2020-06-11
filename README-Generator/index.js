@@ -16,8 +16,28 @@ inquirer
             message: "Please write a short description of your application.",
             name: "description"
         },
+        {
+            type: "input",
+            message: "Please enter installation instructions for your application.",
+            name: "installation"
+        },
+        {
+            type: "input",
+            message: "Please enter your application's usage instructions.",
+            name: "usage"
+        },
+        {
+            type: "input",
+            message: "Please enter contribution guidlines.",
+            name: "contributing"
+        },
+        {
+            type: "input",
+            message: "Please enter test instructions for your application.",
+            name: "tests"
+        },
     ])
-    .then(function ({ title, description }) {
+    .then(function ({ title, description, installation, usage, contributing, tests }) {
 
 const skeleton = `#  ${title}
 
@@ -33,7 +53,25 @@ ${description}
 -   [License](#license)
 -   [Contributing](#contributing)
 -   [Tests](#tests)
--   [Questions](#questions)`;
+-   [Questions](#questions)
+
+## Installation
+
+${installation}
+
+## Usage
+
+${usage}
+
+## Contributing
+
+${contributing}
+
+## Tests
+
+${tests}
+
+`;
 
         fs.writeFile("./README.md", skeleton, function(err) {
             if (err) {
