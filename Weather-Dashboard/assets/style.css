@@ -44,8 +44,7 @@ label{
     #data-today,
     #forecast{
         max-width: 90vw;
-}
-
+    }
 }
 
 /* Styling for UV Index span */
