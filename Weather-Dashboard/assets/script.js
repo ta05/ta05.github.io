@@ -74,7 +74,7 @@ function setFiveDayForecast() {
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function (response) {
-        for (var i = 6; i < 40; i+=8){
+        for (var i = 7; i < 40; i+=8){
             var result = response.list[i];
 
             var date = new Date(result.dt_txt);
