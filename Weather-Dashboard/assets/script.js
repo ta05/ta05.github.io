@@ -74,10 +74,11 @@ function setFiveDayForecast() {
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function (response) {
+        console.log(response.list[6].dt);
         for (var i = 7; i < 40; i+=8){
             var result = response.list[i];
 
-            var date = new Date(result.dt_txt);
+            var date = new Date((result.dt* 1000)).toLocaleDateString();
             var icon = "https://openweathermap.org/img/wn/" + result.weather[0].icon + "@2x.png";
             var description = result.weather[0].description;
             var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
@@ -97,7 +98,7 @@ function createForecastCard(date, icon, description,  temperature, humidity) {
     });
     var cardBody = $("<div>").addClass("class", "card-body");
 
-    var dateEl = $("<h1>").addClass("card-date").text(formatDate(date));
+    var dateEl = $("<h1>").addClass("card-date").text(date);
     var iconEl = $("<img>").attr({
         "src": icon,
         "alt": description,
