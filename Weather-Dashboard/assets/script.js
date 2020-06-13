@@ -74,11 +74,12 @@ function setFiveDayForecast() {
         url: fiveDayForecastQueryURL,
         method: "GET"
     }).then(function (response) {
-        console.log(response.list[6].dt);
+        console.log(response.list[6]);
         for (var i = 7; i < 40; i+=8){
             var result = response.list[i];
 
-            var date = new Date((result.dt* 1000)).toLocaleDateString();
+            var fDate = result.dt_txt.replace("-", "/");
+            var date = new Date(fDate).toLocaleDateString();
             var icon = "https://openweathermap.org/img/wn/" + result.weather[0].icon + "@2x.png";
             var description = result.weather[0].description;
             var temperature = kelvinToFahrenheit(result.main.temp).toFixed(0);
