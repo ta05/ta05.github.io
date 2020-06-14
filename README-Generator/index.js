@@ -36,8 +36,18 @@ inquirer
             message: "Please enter test instructions for your application.",
             name: "tests"
         },
+        {
+            type: "list",
+            message: "Choose a license for your application.",
+            name: "license",
+            choices: [
+                "email",
+                "phone",
+                "telekinesis"
+            ]
+        }
     ])
-    .then(function ({ title, description, installation, usage, contributing, tests }) {
+    .then(function ({ title, description, installation, usage, contributing, tests, license }) {
 
 const skeleton = `#  ${title}
 
@@ -70,6 +80,10 @@ ${contributing}
 ## Tests
 
 ${tests}
+
+## License
+
+${license}
 
 `;
 

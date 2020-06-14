@@ -26,6 +26,11 @@ textarea{
     border-bottom: 10px solid black;
 }
 
+.jumbotron[data-day='0']{
+    background: url("./images/sunday.jpg");
+    background-size: cover;
+    background-position: 0% 22%; 
+}
 .jumbotron[data-day='1']{
     background: url("./images/monday.jpg");
     background-size: cover;
@@ -59,11 +64,6 @@ textarea{
     background: url("./images/saturday.jpg");
     background-size: cover;
     background-position: 0% 25%; 
-}
-.jumbotron[data-day='7']{
-    background: url("./images/sunday.jpg");
-    background-size: cover;
-    background-position: 0% 22%; 
 }
 
 .description{
