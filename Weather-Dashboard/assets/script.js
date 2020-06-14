@@ -77,7 +77,7 @@ function setFiveDayForecast() {
         for (var i = 7; i < 40; i+=8){
             var result = response.list[i];
 
-            var fDate = result.dt_txt.replace("-", "/").split(" ")[0];
+            var fDate = result.dt_txt.replace("-", "/");
             var date = new Date(fDate).toLocaleDateString();
             var icon = "https://openweathermap.org/img/wn/" + result.weather[0].icon + "@2x.png";
             var description = result.weather[0].description;
