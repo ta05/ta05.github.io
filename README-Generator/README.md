@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-None-green.svg)](https://shields.io/)
 
-# Site: https://github.com/ta05/ta05.github.io/tree/master/README-Generator
+## Site: https://github.com/ta05/ta05.github.io/tree/master/README-Generator
 
 ## Description
 
@@ -38,8 +38,8 @@ On line 4 of the index.js file, change the filename to "test.md"
 
 If you have additional questions, feel free to contact me.
 
--   [Email]:(tolualimi05@gmail.com)
--   [Github]:(https://github.com/ta05)
+-   Email: tolualimi05@gmail.com
+-   Github: https://github.com/ta05
 
 ## License
 
