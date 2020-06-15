@@ -1,8 +1,10 @@
-#  readme generator
+#  Application Name
+
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://shields.io/)
 
 ## Description
 
-a command line application that generates a high quality readme from the user's inputs
+Test for ReadMe Application
 
 ## Table of Contents
 
@@ -16,18 +18,39 @@ a command line application that generates a high quality readme from the user's 
 
 ## Installation
 
-install node.js install a terminal that can run node commands. go to the readme generator folder in the terminal. run node index.js
+Clone Repo. Run node index.js file in terminal
 
 ## Usage
 
-used to generate a readme
+Generating a readme for your proejcts
 
 ## Contributing
 
-none
+No contributions
 
 ## Tests
 
-none
+change file name on line 105 to "test.md" run normally per the installation instructions
 
+## License
+
+Copyright (c) 2020 Tolu Alimi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
