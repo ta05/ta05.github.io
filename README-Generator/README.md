@@ -24,7 +24,7 @@ Install node.js. Clone this repo onto your local machine. Open up your terminal 
 
 ## Usage
 
-Used to generate a hiqh quality readme for projects
+Used to generate a high quality readme for projects
 
 ## Contributing
 
