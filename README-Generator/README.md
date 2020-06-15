@@ -43,7 +43,7 @@ If you have additional questions, feel free to contact me.
 
 ## License
 
-
+No License
 
 ## Credits
 
