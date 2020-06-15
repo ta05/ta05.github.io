@@ -1,56 +1,51 @@
-#  Application Name
+#  ReadMe Generator
 
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](https://shields.io/)
+[![License](https://img.shields.io/badge/license-None-green.svg)](https://shields.io/)
+
+# Site: https://github.com/ta05/ta05.github.io/tree/master/README-Generator
 
 ## Description
 
-Test for ReadMe Application
+A command line application that will dynamically generate a high quality README through the user's inputs.
 
 ## Table of Contents
 
 -   [Installation](#installation)
 -   [Usage](#usage)
--   [Credits](#credits)
--   [License](#license)
 -   [Contributing](#contributing)
 -   [Tests](#tests)
 -   [Questions](#questions)
+-   [License](#license)
+-   [Credits](#credits)
 
 ## Installation
 
-Clone Repo. Run node index.js file in terminal
+Install node.js. Clone this repo onto your local machine. Open up your terminal and go into the repo's directory. Run "node index.js" to run this application
 
 ## Usage
 
-Generating a readme for your proejcts
+Used to generate a hiqh quality readme for projects
 
 ## Contributing
 
-No contributions
+No contributions needed
 
 ## Tests
 
-change file name on line 105 to "test.md" run normally per the installation instructions
+On line 4 of the index.js file, change the filename to "test.md"
+
+## Questions
+
+If you have additional questions, feel free to contact me.
+
+-   [Email]:(tolualimi05@gmail.com)
+-   [Github]:(https://github.com/ta05)
 
 ## License
 
-Copyright (c) 2020 Tolu Alimi
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+## Credits
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+I'd like to credit shield.io for their badges and the UT Coding Bootcamp team for waiting 9 assignments including a two week long project before demonstrating an easy-to-use readme generator.
 

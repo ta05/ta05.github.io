@@ -1,6 +1,7 @@
 const fs = require("fs");
-const axios = require("axios");
 const inquirer = require("inquirer");
+
+const filename = "README.md";
 
 console.log("Welcome to the README generator. This command line application will dynamically generate a high quality README through the user's input.")
 
@@ -10,6 +11,11 @@ inquirer
             type: "input",
             message: "What is the title of your application?",
             name: "title"
+        },
+        {
+            type: "input",
+            message: "What is the url of your application?",
+            name: "url"
         },
         {
             type: "input",
@@ -54,17 +60,34 @@ inquirer
         },
         {
             type: "input",
+            message: "Please enter your email address.",
+            name: "email"
+        },
+        {
+            type: "input",
+            message: "Please enter your github link.",
+            name: "github"
+        },
+        {
+            type: "input",
             message: "Please enter the current year.",
             name: "year"
         },
+        {
+            type: "input",
+            message: "Lastly, feel free to include any credits.",
+            name: "credits"
+        },
     ])
-    .then(function ({ title, description, installation, usage, contributing, tests, license, name, year }) {
+    .then(function ({ title, url, description, installation, usage, contributing, tests, license, name, email, github, year, credits }) {
 
 const skeleton = 
 
 `#  ${title}
 
 [![License](https://img.shields.io/badge/license-${license}-green.svg)](https://shields.io/)
+
+# Site: ${url}
 
 ## Description
 
@@ -74,11 +97,11 @@ ${description}
 
 -   [Installation](#installation)
 -   [Usage](#usage)
--   [Credits](#credits)
--   [License](#license)
 -   [Contributing](#contributing)
 -   [Tests](#tests)
 -   [Questions](#questions)
+-   [License](#license)
+-   [Credits](#credits)
 
 ## Installation
 
@@ -96,22 +119,35 @@ ${contributing}
 
 ${tests}
 
+## Questions
+
+If you have additional questions, feel free to contact me.
+
+-   [Email]: (${email})
+-   [Github]: (${github})
+
 ## License
 
 ${getLicense(license, name, year)}
 
+## Credits
+
+${credits}
+
 `;
 
-        fs.writeFile("./README.md", skeleton, function(err) {
+        fs.writeFile("./" + filename, skeleton, function(err) {
             if (err) {
                 throw err;
             }
         
-            console.log("Successfully wrote to README.md file");
+            console.log(`Successfully wrote to ${filename} file`);
             });
     });
 
 function getLicense(license, name, year) {
+    if (license === 'None') return "";
+
 const licenseList = {
 Apache:
 `Copyright ${year} ${name}
@@ -164,8 +200,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.`,
-
-None: ``
 };
 
 return licenseList[license];
