@@ -78,6 +78,14 @@ inquirer
             await engineerPrompt(parseInt(numEngineer));
         if(parseInt(numIntern) > 0)
             await internPrompt(parseInt(numIntern));
+        
+        const htmlFrame = render(employeeList);
+        fs.writeFile(outputPath, htmlFrame, function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log(`Successfully wrote to ${outputPath}`);
+        })
     });
 
 
@@ -105,7 +113,6 @@ async function internPrompt(numEmployee) {
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-const htmlFrame = render(employeeList);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
@@ -113,13 +120,6 @@ const htmlFrame = render(employeeList);
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-fs.writeFile(outputPath, htmlFrame, function (err) {
-    if (err) {
-        throw err;
-    }
-
-    console.log(`Successfully wrote to ${outputPath}`);
-})
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
