@@ -1,7 +1,7 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 
-const filename = "README.md";
+const filename = "test.md";
 
 console.log("Welcome to the README generator. This command line application will dynamically generate a high quality README through the user's input.")
 
