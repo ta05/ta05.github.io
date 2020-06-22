@@ -1,9 +1,5 @@
 #  Homework 10 - OOP: Employee Template Engine
 
-[![License](https://img.shields.io/badge/license-None-green.svg)](https://shields.io/)
-
-## Site: https://github.com/ta05/ta05.github.io/tree/master/Employee-Template-Engine
-
 ## Description
 
 A command line application that prompts the user for information about the manager and team members. The application creates an HTML page that displays a formatted team roster based on information provided by the user.
@@ -48,4 +44,8 @@ No License
 ## Credits
 
 Credit to npm inquirer, my readme generator and Bob the Builder for providing me his employee information.
+
+## Links
+
+Github: https://github.com/ta05/ta05.github.io/tree/master/Employee-Template-Engine
 
