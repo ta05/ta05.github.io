@@ -66,6 +66,9 @@ const questions = [
 
 let employeeList = [];
 
+console.log("Welcome to the Employee Template Engine. You will receive a series of prompts requesting information about your employees.\n")
+console.log(`Please fill out employee information for the manager.`);
+
 inquirer
     .prompt(questions.filter(question => (question.employee === 'employee' || question.employee === 'manager')))
     .then(async function ({ name, id, email, officeNum, numEngineer, numIntern }) {
@@ -97,13 +100,12 @@ async function internPrompt(numEmployee) {
         employeeList.push(new Intern(response.name, response.id, response.email, response.school));
         console.log("");
     }
-    console.log("\n");
 }
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-// const htmlFrame = render(employeeList);
+const htmlFrame = render(employeeList);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
@@ -111,13 +113,13 @@ async function internPrompt(numEmployee) {
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// fs.writeFile(outputPath, htmlFrame, function (err) {
-//     if (err) {
-//         throw err;
-//     }
+fs.writeFile(outputPath, htmlFrame, function (err) {
+    if (err) {
+        throw err;
+    }
 
-//     console.log(`Successfully wrote to ${outputPath}`);
-// })
+    console.log(`Successfully wrote to ${outputPath}`);
+})
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
