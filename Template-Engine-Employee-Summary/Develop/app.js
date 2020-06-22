@@ -46,7 +46,7 @@ const questions = [
     },
     {
         type: "input",
-        message: "How many intenrs are on the team?",
+        message: "How many interns are on the team?",
         name: "numIntern",
         employee: "manager"
     },
@@ -68,15 +68,42 @@ let employeeList = [];
 
 inquirer
     .prompt(questions.filter(question => (question.employee === 'employee' || question.employee === 'manager')))
-    .then(function ({ name, id, email, officeNum, numEngineer, numIntern }) {
+    .then(async function ({ name, id, email, officeNum, numEngineer, numIntern }) {
         employeeList.push(new Manager(name, id, email, officeNum));
+        console.log("\n\n");
+        if(parseInt(numEngineer) > 0)
+            await engineerPrompt(parseInt(numEngineer));
+        if(parseInt(numIntern) > 0)
+            await internPrompt(parseInt(numIntern));
     });
 
+
+async function engineerPrompt(numEmployee) {
+    console.log(`Please fill out employee information for the ${numEmployee} engineer(s)`);
+    for (var i = 0; i < numEmployee; i++) {
+        const response = await inquirer
+            .prompt(questions.filter(question => (question.employee === 'employee' || question.employee === 'engineer')));
+        employeeList.push(new Engineer(response.name, response.id, response.email, response.github));
+        console.log("");
+    }
+    console.log("\n");
+}
+
+async function internPrompt(numEmployee) {
+    console.log(`Please fill out employee information for the ${numEmployee} intern(s)`);
+    for (var i = 0; i < numEmployee; i++) {
+        const response = await inquirer
+            .prompt(questions.filter(question => (question.employee === 'employee' || question.employee === 'intern')));
+        employeeList.push(new Intern(response.name, response.id, response.email, response.school));
+        console.log("");
+    }
+    console.log("\n");
+}
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
-const htmlFrame = render(employeeList);
+// const htmlFrame = render(employeeList);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
@@ -84,13 +111,13 @@ const htmlFrame = render(employeeList);
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-fs.writeFile(outputPath, htmlFrame, function (err) {
-    if (err) {
-        throw err;
-    }
+// fs.writeFile(outputPath, htmlFrame, function (err) {
+//     if (err) {
+//         throw err;
+//     }
 
-    console.log(`Successfully wrote to ${outputPath}`);
-})
+//     console.log(`Successfully wrote to ${outputPath}`);
+// })
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
