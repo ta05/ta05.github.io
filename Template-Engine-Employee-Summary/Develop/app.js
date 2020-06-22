@@ -34,14 +34,20 @@ const questions = [
     },
     {
         type: "input",
-        message: "What is the employee's role?",
-        name: "role",
-        employee: "employee"
+        message: "What is the manager's office number?",
+        name: "officeNum",
+        employee: "manager"
     },
     {
         type: "input",
-        message: "What is the manager's office number?",
-        name: "officeNum",
+        message: "How many engineers are on the team?",
+        name: "numEngineer",
+        employee: "manager"
+    },
+    {
+        type: "input",
+        message: "How many intenrs are on the team?",
+        name: "numIntern",
         employee: "manager"
     },
     {
@@ -58,16 +64,33 @@ const questions = [
     }
 ];
 
+let employeeList = [];
+
+inquirer
+    .prompt(questions.filter(question => (question.employee === 'employee' || question.employee === 'manager')))
+    .then(function ({ name, id, email, officeNum, numEngineer, numIntern }) {
+        employeeList.push(new Manager(name, id, email, officeNum));
+    });
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+
+const htmlFrame = render(employeeList);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
 // `output` folder. You can use the variable `outputPath` above target this location.
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
+
+fs.writeFile(outputPath, htmlFrame, function (err) {
+    if (err) {
+        throw err;
+    }
+
+    console.log(`Successfully wrote to ${outputPath}`);
+})
 
 // HINT: each employee type (manager, engineer, or intern) has slightly different
 // information; write your code to ask different questions via inquirer depending on
