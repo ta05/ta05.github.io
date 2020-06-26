@@ -1,7 +1,7 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 
-const filename = "README.md";
+const filename = "newREADME.md";
 
 console.log("Welcome to the README generator. This command line application will dynamically generate a high quality README through the user's input.")
 
@@ -81,13 +81,13 @@ inquirer
     ])
     .then(function ({ title, url, description, installation, usage, contributing, tests, license, name, email, github, year, credits }) {
 
-const skeleton = 
-
-`#  ${title}
+const skeleton = `#  ${title}
 
 [![License](https://img.shields.io/badge/license-${license}-green.svg)](https://shields.io/)
 
-## Site: ${url}
+## Site
+
+-   ${url}
 
 ## Description
 
