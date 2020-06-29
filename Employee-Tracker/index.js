@@ -9,9 +9,17 @@ const connection = mysql.createConnection({
     database: "business_db"
 });
 
-connection.query(
-    'SELECT * FROM employee',
-    function (err, results, fields) {
+connection.connect((err) => {
+    if (err)
+        throw err;
+    
+});
+
+function afterConnection() {
+    connection.query('SELECT * FROM employee WHERE genre', function (err, results, fields) {
+        if (err)
+            throw err;
         console.log(results);
-    }
-);
+        connection.end();
+    });
+}
