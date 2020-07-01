@@ -58,6 +58,8 @@ function init() {
                     viewAllEmployees();
                     break;
                 case "Update employee":
+                    updateEmployeeRole();
+                    break;
                 case "Exit":
                     connection.end();
                     break;
@@ -82,10 +84,10 @@ function addDepartment() {
         .then(function ({ name, id }) {
             const newDepartment = new Department(parseInt(id), name);
             const query = newDepartment.addQuery();
-            connection.query(query, function (err, res) {
+            connection.query(query, newDepartment.getValues(), function (err, res) {
                 if (err)
                     throw err;
-                console.log("New department added\n");
+                console.log("\nNew department added\n");
                 init();
             });
         });
@@ -118,10 +120,10 @@ function addRole() {
         .then(function ({ title, id, salary, deptId }) {
             const newRole = new Role(parseInt(id), title, parseFloat(salary), parseInt(deptId));
             const query = newRole.addQuery();
-            connection.query(query, function (err, res) {
+            connection.query(query, newRole.getValues(), function (err, res) {
                 if (err)
                     throw err;
-                console.log("New role added\n");
+                console.log("\nNew role added\n");
                 init();
             });
         });
@@ -165,17 +167,17 @@ function addEmployee() {
         .then(function ({ first, last, id, roleId, managerId }) {
             const newEmployee = new Employee(parseInt(id), first, last, parseInt(roleId), managerId === "" ? null : parseInt(managerId));
             const query = newEmployee.addQuery();
-            connection.query(query, function (err, res) {
+            connection.query(query, newEmployee.getValues(), function (err, res) {
                 if (err)
                     throw err;
-                console.log("New Employee added\n");
+                console.log("\nNew Employee added\n");
                 init();
             });
         });
 }
 
 function viewAllDepartments() {
-    const query = Department.prototype.viewQuery();
+    const query = Department.prototype.viewQuery;
     connection.query(query, function (err, res) {
         if (err)
             throw err;
@@ -192,7 +194,7 @@ function viewAllDepartments() {
 }
 
 function viewAllRoles() {
-    const query = Role.prototype.viewQuery();
+    const query = Role.prototype.viewQuery;
     connection.query(query, function (err, res) {
         if (err)
             throw err;
@@ -213,7 +215,7 @@ function viewAllRoles() {
 }
 
 function viewAllEmployees() {
-    const query = Employee.prototype.viewQuery();
+    const query = Employee.prototype.viewQuery;
     connection.query(query, function (err, res) {
         if (err)
             throw err;
@@ -233,4 +235,29 @@ function viewAllEmployees() {
         });
         init();
     });
+}
+
+function updateEmployeeRole() {
+    inquirer
+        .prompt([
+            {
+                name: "id",
+                type: "input",
+                message: "What is the employee's id?"
+            },
+            {
+                name: "newRoleId",
+                type: "input",
+                message: "What is the id of the employee's new role?"
+            }
+        ])
+        .then(function ({ id, newRoleId }) {
+            const query = Employee.prototype.updateRoleQuery;
+            connection.query(query, [{ role_id: parseInt(newRoleId) }, { id: parseInt(id) }], function (err, res) {
+                if (err)
+                    throw err;
+                console.log("Updated employee's role\n");
+                init();
+            });
+        })
 }

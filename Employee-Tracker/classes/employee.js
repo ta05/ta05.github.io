@@ -8,12 +8,17 @@ class Employee {
     }
 
     addQuery() {
-        return `INSERT INTO employee VALUES (${this.id}, "${this.first}", "${this.last}", ${this.roleId}, ${this.managerId})`;
+        return `INSERT INTO employee VALUES (?, ?, ?, ?, ?)`;
+    }
+
+    getValues() {
+        return [this.id, this.first, this.last, this.roleId, this.managerId];
     }
 }
 
-Employee.prototype.viewQuery = function () {
-    return `SELECT * FROM employee`;
-}
+Employee.prototype.viewQuery = `SELECT * FROM employee`;
+
+Employee.prototype.updateRoleQuery = `UPDATE employee SET ? WHERE ?`;
+
 
 module.exports = Employee;

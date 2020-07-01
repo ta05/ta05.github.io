@@ -7,12 +7,14 @@ class Role {
     }
 
     addQuery() {
-        return `INSERT INTO role VALUES (${this.id}, "${this.title}", ${this.salary}, ${this.deptId})`;
+        return `INSERT INTO role VALUES (?, ?,?, ?)`;
+    }
+
+    getValues() {
+        return [this.id, this.title, this.salary, this.deptId];
     }
 }
 
-Role.prototype.viewQuery = function () {
-    return `SELECT * FROM role`;
-}
+Role.prototype.viewQuery = `SELECT * FROM role`;
 
 module.exports = Role;
