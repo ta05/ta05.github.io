@@ -3,6 +3,7 @@ const cTable = require("console.table");
 const inquirer = require("inquirer");
 const Department = require("./classes/department");
 const Role = require("./classes/role");
+const Employee = require("./classes/employee");
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -45,6 +46,8 @@ function init() {
                     addRole();
                     break;
                 case "Add employee":
+                    addEmployee();
+                    break;
                 case "View all departments":
                     viewAllDepartments();
                     break;
@@ -52,6 +55,8 @@ function init() {
                     viewAllRoles();
                     break;
                 case "View all employees":
+                    viewAllEmployees();
+                    break;
                 case "Update employee":
                 case "Exit":
                     connection.end();
@@ -122,6 +127,53 @@ function addRole() {
         });
 }
 
+function addEmployee() {
+    inquirer
+        .prompt([
+            {
+                name: "first",
+                type: "input",
+                message: "What is the new employee's first name?",
+            },
+            {
+                name: "last",
+                type: "input",
+                message: "What is the new employee's last name?",
+            },
+            {
+                name: "id",
+                type: "input",
+                message: "What is the employee's id?",
+            },
+            {
+                name: "roleId",
+                type: "input",
+                message: "What is the employee's role id?",
+            },
+            {
+                name: "managerId",
+                type: "input",
+                message: "What is the id of the employee's manager?",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        ])
+        .then(function ({ first, last, id, roleId, managerId }) {
+            const newEmployee = new Employee(parseInt(id), first, last, parseInt(roleId), managerId === "" ? null : parseInt(managerId));
+            const query = newEmployee.addQuery();
+            connection.query(query, function (err, res) {
+                if (err)
+                    throw err;
+                console.log("New Employee added\n");
+                init();
+            });
+        });
+}
+
 function viewAllDepartments() {
     const query = Department.prototype.viewQuery();
     connection.query(query, function (err, res) {
@@ -154,6 +206,29 @@ function viewAllRoles() {
                 role.salary + 
                 " || dept id: " +
                 role.department_id
+            );
+        });
+        init();
+    });
+}
+
+function viewAllEmployees() {
+    const query = Employee.prototype.viewQuery();
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        res.forEach(employee => {
+            console.log(
+                "id: " +
+                employee.id +
+                " || first name: " +
+                employee.first_name + 
+                " || first name: " +
+                employee.last_name + 
+                " || role id: " +
+                employee.role_id + 
+                " || manager id: " +
+                employee.manager_id
             );
         });
         init();

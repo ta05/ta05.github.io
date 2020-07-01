@@ -1,18 +1,19 @@
 class Employee {
-    constructor(id, title, salary, deptId) {
+    constructor(id, first, last, roleId, managerId) {
         this.id = id;
-        this.title = title;
-        this.salary = salary;
-        this.deptId = deptId
+        this.first = first;
+        this.last = last;
+        this.roleId = roleId;
+        this.managerId = managerId;
     }
 
     addQuery() {
-        return `INSERT INTO role VALUES (${this.id}, "${this.title}", ${this.salary}, ${this.deptId})`;
+        return `INSERT INTO employee VALUES (${this.id}, "${this.first}", "${this.last}", ${this.roleId}, ${this.managerId})`;
     }
 }
 
 Employee.prototype.viewQuery = function () {
-    return `SELECT * FROM role`;
+    return `SELECT * FROM employee`;
 }
 
 module.exports = Employee;
