@@ -1,7 +1,8 @@
 const mysql = require("mysql2");
 const cTable = require("console.table");
 const inquirer = require("inquirer");
-const Department = require("./department");
+const Department = require("./classes/department");
+const Role = require("./classes/role");
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -28,9 +29,9 @@ function init() {
                 "Add department",
                 "Add role",
                 "Add employee",
-                "View department",
-                "View role",
-                "View employee",
+                "View all departments",
+                "View all roles",
+                "View all employees",
                 "Update employee",
                 "Exit"
             ]
@@ -41,12 +42,16 @@ function init() {
                     addDepartment();
                     break;
                 case "Add role":
-                case "Add employee":
-                case "View department":
-                    viewDepartment();
+                    addRole();
                     break;
-                case "View role":
-                case "View employee":
+                case "Add employee":
+                case "View all departments":
+                    viewAllDepartments();
+                    break;
+                case "View all roles":
+                    viewAllRoles();
+                    break;
+                case "View all employees":
                 case "Update employee":
                 case "Exit":
                     connection.end();
@@ -81,7 +86,43 @@ function addDepartment() {
         });
 }
 
-function viewDepartment() {
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                name: "title",
+                type: "input",
+                message: "What is the title of the new role?",
+            },
+            {
+                name: "id",
+                type: "input",
+                message: "What is the role's id?",
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What is the role's starting salary?",
+            },
+            {
+                name: "deptId",
+                type: "input",
+                message: "What is the role's department id?",
+            }
+        ])
+        .then(function ({ title, id, salary, deptId }) {
+            const newRole = new Role(parseInt(id), title, parseFloat(salary), parseInt(deptId));
+            const query = newRole.addQuery();
+            connection.query(query, function (err, res) {
+                if (err)
+                    throw err;
+                console.log("New role added\n");
+                init();
+            });
+        });
+}
+
+function viewAllDepartments() {
     const query = Department.prototype.viewQuery();
     connection.query(query, function (err, res) {
         if (err)
@@ -92,6 +133,27 @@ function viewDepartment() {
                 department.id +
                 " || name: " +
                 department.name
+            );
+        });
+        init();
+    });
+}
+
+function viewAllRoles() {
+    const query = Role.prototype.viewQuery();
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        res.forEach(role => {
+            console.log(
+                "id: " +
+                role.id +
+                " || title: " +
+                role.title + 
+                " || salary: $" +
+                role.salary + 
+                " || dept id: " +
+                role.department_id
             );
         });
         init();
