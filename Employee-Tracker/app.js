@@ -33,7 +33,8 @@ function init() {
                 "View all departments",
                 "View all roles",
                 "View all employees",
-                "Update employee",
+                "Update employee's role",
+                "Update employee's manager",
                 "Exit"
             ]
         })
@@ -57,8 +58,11 @@ function init() {
                 case "View all employees":
                     viewAllEmployees();
                     break;
-                case "Update employee":
+                case "Update employee's role":
                     updateEmployeeRole();
+                    break;
+                case "Update employee's manager":
+                    updateEmployeeManager();
                     break;
                 case "Exit":
                     connection.end();
@@ -181,14 +185,7 @@ function viewAllDepartments() {
     connection.query(query, function (err, res) {
         if (err)
             throw err;
-        res.forEach(department => {
-            console.log(
-                "id: " +
-                department.id +
-                " || name: " +
-                department.name
-            );
-        });
+        console.table(res);
         init();
     });
 }
@@ -198,18 +195,7 @@ function viewAllRoles() {
     connection.query(query, function (err, res) {
         if (err)
             throw err;
-        res.forEach(role => {
-            console.log(
-                "id: " +
-                role.id +
-                " || title: " +
-                role.title + 
-                " || salary: $" +
-                role.salary + 
-                " || dept id: " +
-                role.department_id
-            );
-        });
+        console.table(res);
         init();
     });
 }
@@ -219,20 +205,7 @@ function viewAllEmployees() {
     connection.query(query, function (err, res) {
         if (err)
             throw err;
-        res.forEach(employee => {
-            console.log(
-                "id: " +
-                employee.id +
-                " || first name: " +
-                employee.first_name + 
-                " || first name: " +
-                employee.last_name + 
-                " || role id: " +
-                employee.role_id + 
-                " || manager id: " +
-                employee.manager_id
-            );
-        });
+        console.table(res);
         init();
     });
 }
@@ -252,11 +225,36 @@ function updateEmployeeRole() {
             }
         ])
         .then(function ({ id, newRoleId }) {
-            const query = Employee.prototype.updateRoleQuery;
+            const query = Employee.prototype.updateQuery;
             connection.query(query, [{ role_id: parseInt(newRoleId) }, { id: parseInt(id) }], function (err, res) {
                 if (err)
                     throw err;
-                console.log("Updated employee's role\n");
+                console.log("\nUpdated employee's role\n");
+                init();
+            });
+        })
+}
+
+function updateEmployeeManager() {
+    inquirer
+        .prompt([
+            {
+                name: "id",
+                type: "input",
+                message: "What is the employee's id?"
+            },
+            {
+                name: "newManagerId",
+                type: "input",
+                message: "What is the id of the employee's new manager?"
+            }
+        ])
+        .then(function ({ id, newManagerId }) {
+            const query = Employee.prototype.updateQuery;
+            connection.query(query, [{ manager_id: parseInt(newManagerId) }, { id: parseInt(id) }], function (err, res) {
+                if (err)
+                    throw err;
+                console.log("\nUpdated employee's manager\n");
                 init();
             });
         })

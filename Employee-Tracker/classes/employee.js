@@ -18,7 +18,7 @@ class Employee {
 
 Employee.prototype.viewQuery = `SELECT * FROM employee`;
 
-Employee.prototype.updateRoleQuery = `UPDATE employee SET ? WHERE ?`;
+Employee.prototype.updateQuery = `UPDATE employee SET ? WHERE ?`;
 
 
 module.exports = Employee;
