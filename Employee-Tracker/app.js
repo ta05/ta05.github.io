@@ -39,6 +39,7 @@ function init() {
                 "Delete department",
                 "Delete role",
                 "Delete employee",
+                "View department salary budget",
                 "Exit"
             ]
         })
@@ -80,6 +81,9 @@ function init() {
                     break;
                 case "Delete employee":
                     deleteEmployee();
+                    break;
+                case "View department salary budget":
+                    viewDepartmentSalaryBudget();
                     break;
                 case "Exit":
                     connection.end();
@@ -347,6 +351,23 @@ function deleteEmployee() {
                 if (err)
                     throw err;
                 console.log("\nDeleted employee\n");
+                init();
+            });
+    })
+}
+
+function viewDepartmentSalaryBudget() {
+    inquirer
+        .prompt({
+            name: "id",
+            type: "input",
+            message: "What is the department's id?"
+        })
+        .then(function ({ id }) {
+            console.log();
+            const query = Department.prototype.viewSalaryQuery;
+            connection.query(query, { "d.id": parseInt(id) }, function (err, res) {
+                console.table(res);
                 init();
             });
     })
