@@ -17,4 +17,6 @@ class Role {
 
 Role.prototype.viewQuery = `SELECT * FROM role`;
 
+Role.prototype.deleteQuery = `DELETE FROM role WHERE ?`;
+
 module.exports = Role;

@@ -15,4 +15,6 @@ class Department {
 
 Department.prototype.viewQuery = `SELECT * FROM department`;
 
+Department.prototype.deleteQuery = `DELETE FROM department WHERE ?`;
+
 module.exports = Department;

@@ -20,5 +20,7 @@ Employee.prototype.viewQuery = `SELECT * FROM employee`;
 
 Employee.prototype.updateQuery = `UPDATE employee SET ? WHERE ?`;
 
+Employee.prototype.deleteQuery = `DELETE FROM employee WHERE ?`;
+
 
 module.exports = Employee;

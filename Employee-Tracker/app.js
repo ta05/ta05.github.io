@@ -33,12 +33,17 @@ function init() {
                 "View all departments",
                 "View all roles",
                 "View all employees",
+                "View employees by manager",
                 "Update employee's role",
                 "Update employee's manager",
+                "Delete department",
+                "Delete role",
+                "Delete employee",
                 "Exit"
             ]
         })
         .then(function (answer) {
+            console.log("\n");
             switch (answer.action) {
                 case "Add department":
                     addDepartment();
@@ -58,11 +63,23 @@ function init() {
                 case "View all employees":
                     viewAllEmployees();
                     break;
+                case "View employees by manager":
+                    viewEmployeesByManager();
+                    break;
                 case "Update employee's role":
                     updateEmployeeRole();
                     break;
                 case "Update employee's manager":
                     updateEmployeeManager();
+                    break;
+                case "Delete department":
+                    deleteDepartment();
+                    break;
+                case "Delete role":
+                    deleteRole();
+                    break;
+                case "Delete employee":
+                    deleteEmployee();
                     break;
                 case "Exit":
                     connection.end();
@@ -210,6 +227,27 @@ function viewAllEmployees() {
     });
 }
 
+function viewEmployeesByManager() {
+    inquirer
+        .prompt([
+            {
+                name: "managerId",
+                type: "input",
+                message: "What is the manager's id?"
+            }
+        ])
+        .then(function ({ managerId }) {
+            console.log();
+            const query = `${Employee.prototype.viewQuery} WHERE ? `;
+            connection.query(query, [{ manager_id: parseInt(managerId) }], function (err, res) {
+                if (err)
+                    throw err;
+                console.table(res);
+                init();
+            });
+        })
+}
+
 function updateEmployeeRole() {
     inquirer
         .prompt([
@@ -258,4 +296,58 @@ function updateEmployeeManager() {
                 init();
             });
         })
+}
+
+function deleteDepartment() {
+    inquirer
+        .prompt({
+            name: "id",
+            type: "input",
+            message: "What is the department's id?"
+        })
+        .then(function ({ id }) {
+            const query = Department.prototype.deleteQuery;
+            connection.query(query, { id: parseInt(id) }, function (err, res) {
+                if (err)
+                    throw err;
+                console.log("\nDeleted department\n");
+                init();
+            });
+    })
+}
+
+function deleteRole() {
+    inquirer
+        .prompt({
+            name: "id",
+            type: "input",
+            message: "What is the role's id?"
+        })
+        .then(function ({ id }) {
+            const query = Role.prototype.deleteQuery;
+            connection.query(query, { id: parseInt(id) }, function (err, res) {
+                if (err)
+                    throw err;
+                console.log("\nDeleted role\n");
+                init();
+            });
+    })
+}
+
+function deleteEmployee() {
+    inquirer
+        .prompt({
+            name: "id",
+            type: "input",
+            message: "What is the employee's id?"
+        })
+        .then(function ({ id }) {
+            const query = Employee.prototype.deleteQuery;
+            connection.query(query, { id: parseInt(id) }, function (err, res) {
+                if (err)
+                    throw err;
+                console.log("\nDeleted employee\n");
+                init();
+            });
+    })
 }
