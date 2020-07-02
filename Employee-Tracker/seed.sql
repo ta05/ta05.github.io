@@ -20,7 +20,7 @@ VALUES
     (34, "Product Manager", 68000, 3),
     (35, "Product Director", 80000, 3),
     (56, "IT Director", 125000, 5),
-    (61, "Financial Analyst", 125000, 6),
+    (61, "Financial Analyst", 60000, 6),
     (63, "Strategy & Rate Director", 130000, 6),
     (64, "FP&A Director", 117000, 6);
 
