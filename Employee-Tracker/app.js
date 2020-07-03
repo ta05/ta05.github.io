@@ -34,6 +34,7 @@ function init() {
                 "View all roles",
                 "View all employees",
                 "View employees by manager",
+                "View employees by department",
                 "Update employee's role",
                 "Update employee's manager",
                 "Delete department",
@@ -66,6 +67,9 @@ function init() {
                     break;
                 case "View employees by manager":
                     viewEmployeesByManager();
+                    break;
+                case "View employees by department":
+                    viewEmployeesByDepartment();
                     break;
                 case "Update employee's role":
                     updateEmployeeRole();
@@ -143,7 +147,7 @@ function addRole() {
                 },
                 {
                     name: "department",
-                    type: "rawlist",
+                    type: "list",
                     message: "Select the department.",
                     choices: function () {
                         let choiceArray = [];
@@ -152,7 +156,6 @@ function addRole() {
                         });
                         return choiceArray;
                     }
-
                 }
             ])
             .then(function ({ title, id, salary, department }) {
@@ -170,6 +173,9 @@ function addRole() {
 function addEmployee() {
     const query = `SELECT DISTINCT r.title, CONCAT(m.first_name, " ", m.last_name) AS name FROM role r LEFT JOIN employee m ON(m.role_id = r.id)`;
     connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
         inquirer
             .prompt([
                 {
@@ -258,24 +264,73 @@ function viewAllEmployees() {
 }
 
 function viewEmployeesByManager() {
-    inquirer
-        .prompt([
-            {
-                name: "managerId",
-                type: "input",
-                message: "What is the manager's id?"
-            }
-        ])
-        .then(function ({ managerId }) {
-            console.log();
-            const query = `${Employee.prototype.viewQuery} WHERE ? `;
-            connection.query(query, [{ manager_id: parseInt(managerId) }], function (err, res) {
-                if (err)
-                    throw err;
-                console.table(res);
-                init();
+    const query = `SELECT CONCAT(first_name, " ", last_name) name FROM employee m`;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt([
+                {
+                    name: "manager",
+                    type: "list",
+                    message: "Select the manager.",
+                    choices: function () {
+                        let choiceArray = ["None"];
+                        for (var i = 0; i < res.length; i++){
+                            if(res[i].name !== null)
+                                choiceArray.push(res[i].name);
+                        }
+                        return choiceArray;
+                    }
+                }
+            ])
+            .then(function ({ manager }) {
+                console.log();
+                manager = manager === "None" ? null : manager;
+                const query = `${Employee.prototype.viewQuery} WHERE CONCAT(m.first_name, " ", m.last_name) = ? `;
+                connection.query(query, manager, function (err, res) {
+                    if (err)
+                        throw err;
+                    console.table(res);
+                    init();
+                });
             });
-        })
+    });
+}
+
+function viewEmployeesByDepartment() {
+    const query = Department.prototype.viewQuery;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt([
+                {
+                    name: "department",
+                    type: "list",
+                    message: "Select the department.",
+                    choices: function () {
+                        let choiceArray = [];
+                        res.forEach(dept => {
+                            choiceArray.push(dept.name);
+                        });
+                        return choiceArray;
+                    }
+                }
+            ])
+            .then(function ({ department }) {
+                console.log();
+                const query = `${Employee.prototype.viewQuery} WHERE d.name = ? `;
+                connection.query(query, department, function (err, res) {
+                    if (err)
+                        throw err;
+                    console.table(res);
+                    init();
+                });
+            });
+    });
 }
 
 function updateEmployeeRole() {
