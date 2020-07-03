@@ -17,6 +17,6 @@ Department.prototype.viewQuery = `SELECT * FROM department`;
 
 Department.prototype.deleteQuery = `DELETE FROM department WHERE ?`;
 
-Department.prototype.viewSalaryQuery = `SELECT SUM(salary) AS "Department Salary" FROM employee e LEFT JOIN role r ON (e.role_id = r.id) LEFT JOIN department d ON (r.department_id = d.id) WHERE ?`;
+Department.prototype.viewSalaryQuery = `SELECT d.id, d.name, SUM(salary) AS "Department Salary" FROM employee e LEFT JOIN role r ON (e.role_id = r.id) LEFT JOIN department d ON (r.department_id = d.id) WHERE ?`;
 
 module.exports = Department;

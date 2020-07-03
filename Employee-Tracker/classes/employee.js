@@ -16,7 +16,7 @@ class Employee {
     }
 }
 
-Employee.prototype.viewQuery = `SELECT * FROM employee`;
+Employee.prototype.viewQuery = `select e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary, concat(m.first_name, " ", m.last_name) as manager from employee e LEFT JOIN employee m ON(e.manager_id = m.id) INNER JOIN role r ON(e.role_id = r.id) INNER JOIN department d ON(r.department_id = d.id)`;
 
 Employee.prototype.updateQuery = `UPDATE employee SET ? WHERE ?`;
 

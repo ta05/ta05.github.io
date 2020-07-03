@@ -83,7 +83,7 @@ function init() {
                     deleteEmployee();
                     break;
                 case "View department salary budget":
-                    viewDepartmentSalaryBudget();
+                    viewDepartmentSalary();
                     break;
                 case "Exit":
                     connection.end();
@@ -356,7 +356,7 @@ function deleteEmployee() {
     })
 }
 
-function viewDepartmentSalaryBudget() {
+function viewDepartmentSalary() {
     inquirer
         .prompt({
             name: "id",

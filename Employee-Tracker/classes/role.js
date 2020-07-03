@@ -15,7 +15,7 @@ class Role {
     }
 }
 
-Role.prototype.viewQuery = `SELECT * FROM role`;
+Role.prototype.viewQuery = `SELECT r.id, r.title, r.salary, d.name as department FROM role r INNER JOIN department d ON(r.department_id = d.id)`;
 
 Role.prototype.deleteQuery = `DELETE FROM role WHERE ?`;
 
