@@ -119,39 +119,52 @@ function addDepartment() {
 }
 
 function addRole() {
-    inquirer
-        .prompt([
-            {
-                name: "title",
-                type: "input",
-                message: "What is the title of the new role?",
-            },
-            {
-                name: "id",
-                type: "input",
-                message: "What is the role's id?",
-            },
-            {
-                name: "salary",
-                type: "input",
-                message: "What is the role's starting salary?",
-            },
-            {
-                name: "deptId",
-                type: "input",
-                message: "What is the role's department id?",
-            }
-        ])
-        .then(function ({ title, id, salary, deptId }) {
-            const newRole = new Role(parseInt(id), title, parseFloat(salary), parseInt(deptId));
-            const query = newRole.addQuery();
-            connection.query(query, newRole.getValues(), function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nNew role added\n");
-                init();
+    const query = Department.prototype.viewQuery;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt([
+                {
+                    name: "title",
+                    type: "input",
+                    message: "What is the title of the new role?"
+                },
+                {
+                    name: "id",
+                    type: "input",
+                    message: "What is the role's id?"
+                },
+                {
+                    name: "salary",
+                    type: "input",
+                    message: "What is the role's starting salary?"
+                },
+                {
+                    name: "department",
+                    type: "rawlist",
+                    message: "Select the department.",
+                    choices: function () {
+                        let choiceArray = [];
+                        res.forEach(dept => {
+                            choiceArray.push(dept.name);
+                        });
+                        return choiceArray;
+                    }
+
+                }
+            ])
+            .then(function ({ title, id, salary, department }) {
+                const query = Role.prototype.addQuery;
+                connection.query(query, [parseInt(id), title, parseFloat(salary), {name: department}], function (err, res) {
+                    if (err)
+                        throw err;
+                    console.log("\nNew role added\n");
+                    init();
+                });
             });
-        });
+    });
 }
 
 function addEmployee() {
