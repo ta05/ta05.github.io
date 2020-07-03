@@ -168,50 +168,63 @@ function addRole() {
 }
 
 function addEmployee() {
-    inquirer
-        .prompt([
-            {
-                name: "first",
-                type: "input",
-                message: "What is the new employee's first name?",
-            },
-            {
-                name: "last",
-                type: "input",
-                message: "What is the new employee's last name?",
-            },
-            {
-                name: "id",
-                type: "input",
-                message: "What is the employee's id?",
-            },
-            {
-                name: "roleId",
-                type: "input",
-                message: "What is the employee's role id?",
-            },
-            {
-                name: "managerId",
-                type: "input",
-                message: "What is the id of the employee's manager?",
-                validate: function (value) {
-                    if (isNaN(value) === false) {
-                        return true;
+    const query = `SELECT DISTINCT r.title, CONCAT(m.first_name, " ", m.last_name) AS name FROM role r LEFT JOIN employee m ON(m.role_id = r.id)`;
+    connection.query(query, function (err, res) {
+        inquirer
+            .prompt([
+                {
+                    name: "first",
+                    type: "input",
+                    message: "What is the new employee's first name?"
+                },
+                {
+                    name: "last",
+                    type: "input",
+                    message: "What is the new employee's last name?"
+                },
+                {
+                    name: "id",
+                    type: "input",
+                    message: "What is the employee's id?"
+                },
+                {
+                    name: "title",
+                    type: "list",
+                    message: "What is the employee's role?",
+                    choices: function () {
+                        let choiceArray = [];
+                        res.forEach(emp => {
+                            if(!(choiceArray.indexOf(emp.title) + 1))
+                                choiceArray.push(emp.title);
+                        });
+                        return choiceArray;
                     }
-                    return false;
+                },
+                {
+                    name: "manager",
+                    type: "list",
+                    message: "Who is the employee's manager?",
+                    choices: function () {
+                        let choiceArray = ["None"];
+                        for (var i = 0; i < res.length; i++){
+                            if(res[i].name !== null)
+                                choiceArray.push(res[i].name);
+                        }
+                        return choiceArray;
+                    }
                 }
-            }
-        ])
-        .then(function ({ first, last, id, roleId, managerId }) {
-            const newEmployee = new Employee(parseInt(id), first, last, parseInt(roleId), managerId === "" ? null : parseInt(managerId));
-            const query = newEmployee.addQuery();
-            connection.query(query, newEmployee.getValues(), function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nNew Employee added\n");
-                init();
+            ])
+            .then(function ({ first, last, id, title, manager }) {
+                manager = manager === "None" ? null : manager;
+                const query = Employee.prototype.addQuery;
+                connection.query(query, [id, first, last, title, manager], function (err, res) {
+                    if (err)
+                        throw err;
+                    console.log("\nNew Employee added\n");
+                    init();
+                });
             });
-        });
+    });
 }
 
 function viewAllDepartments() {
