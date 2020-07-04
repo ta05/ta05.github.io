@@ -18,7 +18,7 @@ Employee.prototype.viewQuery = `SELECT e.id, e.first_name, e.last_name, r.title,
 
 Employee.prototype.updateQuery = `UPDATE employee SET ? WHERE CONCAT(first_name, " ", last_name) = ?`;
 
-Employee.prototype.deleteQuery = `DELETE FROM employee WHERE ?`;
+Employee.prototype.deleteQuery = `DELETE FROM employee WHERE ? = ?`;
 
 
 module.exports = Employee;

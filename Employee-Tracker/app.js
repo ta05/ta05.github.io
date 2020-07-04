@@ -448,57 +448,99 @@ function updateEmployeeManager() {
 }
 
 function deleteDepartment() {
-    inquirer
-        .prompt({
-            name: "id",
-            type: "input",
-            message: "What is the department's id?"
+    const query = Department.prototype.viewQuery;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt({
+                name: "name",
+                type: "list",
+                message: "Select the department.",
+                choices: function () {
+                    let choiceArray = [];
+                    res.forEach(dep => {
+                        choiceArray.push(dep.name);
+                    });
+                    return choiceArray;
+                }
         })
-        .then(function ({ id }) {
-            const query = Department.prototype.deleteQuery;
-            connection.query(query, { id: parseInt(id) }, function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nDeleted department\n");
-                init();
+            .then(function ({ name }) {
+                const query = Department.prototype.deleteQuery;
+                connection.query(query, { name }, function (err, res) {
+                    if (err)
+                        throw err;
+                    
+                    console.log("\nDeleted department\n");
+                    init();
+                });
             });
-    })
+    });
 }
 
 function deleteRole() {
-    inquirer
-        .prompt({
-            name: "id",
-            type: "input",
-            message: "What is the role's id?"
+    const query = `SELECT * FROM role`;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt({
+                name: "title",
+                type: "list",
+                message: "Select the role.",
+                choices: function () {
+                    let choiceArray = [];
+                    res.forEach(role => {
+                        choiceArray.push(role.title);
+                    });
+                    return choiceArray;
+                }
         })
-        .then(function ({ id }) {
-            const query = Role.prototype.deleteQuery;
-            connection.query(query, { id: parseInt(id) }, function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nDeleted role\n");
-                init();
+            .then(function ({ title }) {
+                const query = Role.prototype.deleteQuery;
+                connection.query(query, { title }, function (err, res) {
+                    if (err)
+                        throw err;
+                    
+                    console.log("\nDeleted role\n");
+                    init();
+                });
             });
-    })
+    });
 }
 
 function deleteEmployee() {
-    inquirer
-        .prompt({
-            name: "id",
-            type: "input",
-            message: "What is the employee's id?"
+    const query = `SELECT CONCAT(first_name, " ", last_name) name FROM employee`;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt({
+                name: "name",
+                type: "list",
+                message: "Select the employee.",
+                choices: function () {
+                    let choiceArray = [];
+                    res.forEach(emp => {
+                        choiceArray.push(emp.name);
+                    });
+                    return choiceArray;
+                }
         })
-        .then(function ({ id }) {
-            const query = Employee.prototype.deleteQuery;
-            connection.query(query, { id: parseInt(id) }, function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nDeleted employee\n");
-                init();
+            .then(function ({ name }) {
+                const query = Employee.prototype.deleteQuery;
+                connection.query(query, [`CONCAT(first_name, " ", last_name)`, name], function (err, res) {
+                    if (err)
+                        throw err;
+                    
+                    console.log("\nDeleted employee\n");
+                    init();
+                });
             });
-    })
+    });
 }
 
 function viewDepartmentSalary() {
