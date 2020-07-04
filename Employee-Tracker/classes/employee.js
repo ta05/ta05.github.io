@@ -12,7 +12,7 @@ class Employee {
     }
 }
 
-Employee.prototype.addQuery = `INSERT INTO employee SELECT ?, ?, ?, r.id, m.id from employee AS m INNER JOIN (select distinct id from role WHERE title  =? ) AS r ON(True) WHERE CONCAT(m.first_name, " ", m.last_name) = ? `;
+Employee.prototype.addQuery = `INSERT INTO employee VALUES (?, ?, ?, ?, ?)`;
 
 Employee.prototype.viewQuery = `SELECT e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary, concat(m.first_name, " ", m.last_name) as manager FROM employee e LEFT JOIN employee m ON(e.manager_id = m.id) INNER JOIN role r ON(e.role_id = r.id) INNER JOIN department d ON(r.department_id = d.id)`;
 

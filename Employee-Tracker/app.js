@@ -171,7 +171,7 @@ function addRole() {
 }
 
 function addEmployee() {
-    const query = `SELECT DISTINCT r.title, CONCAT(m.first_name, " ", m.last_name) AS name FROM role r LEFT JOIN employee m ON(m.role_id = r.id)`;
+    const query = `SELECT DISTINCT m.id as emp_id, r.id as role_id, r.title, CONCAT(m.first_name, " ", m.last_name) AS name FROM role r LEFT JOIN employee m ON(m.role_id = r.id)`;
     connection.query(query, function (err, res) {
         if (err)
             throw err;
@@ -221,9 +221,18 @@ function addEmployee() {
                 }
             ])
             .then(function ({ first, last, id, title, manager }) {
-                manager = manager === "None" ? null : manager;
+                let newManagerId = null;
+                let newRoleId;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].name === manager) {
+                        newManagerId = res[i].emp_id;
+                    }
+                    if (res[i].title === title) {
+                        newRoleId = res[i].role_id;
+                    }
+                }
                 const query = Employee.prototype.addQuery;
-                connection.query(query, [id, first, last, title, manager], function (err, res) {
+                connection.query(query, [id, first, last, newRoleId, newManagerId], function (err, res) {
                     if (err)
                         throw err;
                     console.log("\nNew Employee added\n");
@@ -388,28 +397,54 @@ function updateEmployeeRole() {
 }
 
 function updateEmployeeManager() {
-    inquirer
-        .prompt([
-            {
-                name: "id",
-                type: "input",
-                message: "What is the employee's id?"
-            },
-            {
-                name: "newManagerId",
-                type: "input",
-                message: "What is the id of the employee's new manager?"
-            }
-        ])
-        .then(function ({ id, newManagerId }) {
-            const query = Employee.prototype.updateQuery;
-            connection.query(query, [{ manager_id: parseInt(newManagerId) }, { id: parseInt(id) }], function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nUpdated employee's manager\n");
-                init();
+    const query = `SELECT e.id, CONCAT(e.first_name, " ", e.last_name) AS name FROM employee e`;
+    connection.query(query, function (err, res) {
+        inquirer
+            .prompt([
+                {
+                    name: "name",
+                    type: "list",
+                    message: "Select the employee.",
+                    choices: function () {
+                        let choiceArray = [];
+                        res.forEach(emp => {
+                            choiceArray.push(emp.name);
+                        });
+                        return choiceArray;
+                    }
+                },
+                {
+                    name: "manager",
+                    type: "list",
+                    message: "Select the new manager.",
+                    choices: function () {
+                        let choiceArray = ["None"];
+                        res.forEach(emp => {
+                            choiceArray.push(emp.name);
+                        });
+                        return choiceArray;
+                    }
+                }
+            ])
+            .then(function ({ name, manager }) {
+                manager = name === manager || name === "None" ? null : manager;
+                let newManagerId = null;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].name === manager) {
+                        newManagerId = res[i].id;
+                        break;
+                    }
+                }
+                newManagerId = newManagerId === null ? null : parseInt(newManagerId);
+                const query = Employee.prototype.updateQuery;
+                connection.query(query, [{ manager_id: newManagerId }, name], function (err, res) {
+                    if (err)
+                        throw err;
+                    console.log("\nUpdated employee's manager\n");
+                    init();
+                });
             });
-        })
+    });
 }
 
 function deleteDepartment() {
