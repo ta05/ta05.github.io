@@ -334,28 +334,57 @@ function viewEmployeesByDepartment() {
 }
 
 function updateEmployeeRole() {
-    inquirer
-        .prompt([
-            {
-                name: "id",
-                type: "input",
-                message: "What is the employee's id?"
-            },
-            {
-                name: "newRoleId",
-                type: "input",
-                message: "What is the id of the employee's new role?"
-            }
-        ])
-        .then(function ({ id, newRoleId }) {
-            const query = Employee.prototype.updateQuery;
-            connection.query(query, [{ role_id: parseInt(newRoleId) }, { id: parseInt(id) }], function (err, res) {
-                if (err)
-                    throw err;
-                console.log("\nUpdated employee's role\n");
-                init();
+    const query = `SELECT DISTINCT r.id, r.title, CONCAT(e.first_name, " ", e.last_name) AS name FROM role r LEFT JOIN employee e ON(e.role_id = r.id)`;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+        
+        inquirer
+            .prompt([
+                {
+                    name: "name",
+                    type: "list",
+                    message: "Select the employee",
+                    choices: function () {
+                        let choiceArray = [];
+                        for (var i = 0; i < res.length; i++) {
+                            if (res[i].name !== null)
+                                choiceArray.push(res[i].name);
+                        }
+                        return choiceArray;
+                    }
+                },
+                {
+                    name: "title",
+                    type: "list",
+                    message: "What is the employee's new role?",
+                    choices: function () {
+                        let choiceArray = [];
+                        res.forEach(emp => {
+                            if (!(choiceArray.indexOf(emp.title) + 1))
+                                choiceArray.push(emp.title);
+                        });
+                        return choiceArray;
+                    }
+                }
+            ])
+            .then(function ({ name, title }) {
+                let newRoleId;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].title === title) {
+                        newRoleId = res[i].id;
+                        break;
+                    }
+                }
+                const query = Employee.prototype.updateQuery;
+                connection.query(query, [{ role_id: parseInt(newRoleId) }, name], function (err, res) {
+                    if (err)
+                        throw err;
+                    console.log("\nUpdated employee's role\n");
+                    init();
+                });
             });
-        })
+    });
 }
 
 function updateEmployeeManager() {
