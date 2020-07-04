@@ -1,6 +1,10 @@
 const mysql = require("mysql2");
 const cTable = require("console.table");
 const inquirer = require("inquirer");
+const logo = require('asciiart-logo');
+const config = require('./package.json');
+console.log(logo(config).render());
+
 const Department = require("./classes/department");
 const Role = require("./classes/role");
 const Employee = require("./classes/employee");
@@ -532,7 +536,7 @@ function deleteEmployee() {
         })
             .then(function ({ name }) {
                 const query = Employee.prototype.deleteQuery;
-                connection.query(query, [`CONCAT(first_name, " ", last_name)`, name], function (err, res) {
+                connection.query(query, name, function (err, res) {
                     if (err)
                         throw err;
                     
@@ -544,18 +548,31 @@ function deleteEmployee() {
 }
 
 function viewDepartmentSalary() {
-    inquirer
-        .prompt({
-            name: "id",
-            type: "input",
-            message: "What is the department's id?"
-        })
-        .then(function ({ id }) {
-            console.log();
-            const query = Department.prototype.viewSalaryQuery;
-            connection.query(query, { "d.id": parseInt(id) }, function (err, res) {
-                console.table(res);
-                init();
+    const query = Department.prototype.viewQuery;
+    connection.query(query, function (err, res) {
+        if (err)
+            throw err;
+    
+        inquirer
+            .prompt({
+                name: "name",
+                type: "list",
+                message: "Select the department.",
+                choices: function () {
+                    let choiceArray = [];
+                    res.forEach(dep => {
+                        choiceArray.push(dep.name);
+                    });
+                    return choiceArray;
+                }
+            })
+            .then(function ({ name }) {
+                console.log();
+                const query = Department.prototype.viewSalaryQuery;
+                connection.query(query, { name }, function (err, res) {
+                    console.table(res);
+                    init();
+                });
             });
-    })
+    });
 }
