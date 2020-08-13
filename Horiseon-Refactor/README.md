@@ -1,4 +1,4 @@
-# Homework 1 - Horiseon Refactor Assignment
+# Horiseon Refactor
 
 ## Description 
 
