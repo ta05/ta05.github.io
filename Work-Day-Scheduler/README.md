@@ -1,4 +1,4 @@
-# Homework 5 - Third Party APIs: Work Day Scheduler
+# Third Party APIs: Work Day Scheduler
 
 ## Description
 
