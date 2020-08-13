@@ -1,4 +1,4 @@
-# Homework 3 - Javascript Homework: Password Generator
+# Javascript: Password Generator
 
 ## Description
 
