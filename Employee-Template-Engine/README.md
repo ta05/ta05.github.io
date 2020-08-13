@@ -1,4 +1,4 @@
-#  Homework 10 - OOP: Employee Template Engine
+#  OOP: Employee Template Engine
 
 ## Description
 
