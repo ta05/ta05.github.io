@@ -1,4 +1,4 @@
-#  Homework 12 - MySQL Homework: Employee Tracker
+#  MySQL: Employee Tracker
 
 [![License](https://img.shields.io/badge/license-GNU-green.svg)](https://shields.io/)
 
@@ -40,7 +40,7 @@ No testing needed.
 
 If you have additional questions, feel free to contact me.
 
--   Email: tolualimi05@gmail.com
+-   Email: talimi2000@gmail.com
 -   Github: https://github.com/ta05
 
 ## License

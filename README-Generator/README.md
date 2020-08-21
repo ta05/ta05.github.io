@@ -1,4 +1,4 @@
-# Homwork 9 - NodeJS: ReadMe Generator
+# NodeJS: ReadMe Generator
 
 [![License](https://img.shields.io/badge/license-None-green.svg)](https://shields.io/)
 
@@ -38,7 +38,7 @@ On line 4 of the index.js file, change the filename to "test.md"
 
 If you have additional questions, feel free to contact me.
 
--   Email: tolualimi05@gmail.com
+-   Email: talimi2000@gmail.com
 -   Github: https://github.com/ta05
 
 ## License

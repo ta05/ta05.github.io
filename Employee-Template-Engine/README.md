@@ -1,4 +1,4 @@
-#  Homework 10 - OOP: Employee Template Engine
+#  OOP: Employee Template Engine
 
 ## Description
 
@@ -34,7 +34,7 @@ No testing needed.
 
 If you have additional questions, feel free to contact me.
 
--   Email: tolualimi05@gmail.com
+-   Email: talimi2000@gmail.com
 -   Github: https://github.com/ta05
 
 ## License
