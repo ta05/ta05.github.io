@@ -1,3 +1,3 @@
 # Assignment Repo
 
-Holds Assignments for Coding Camp
+A directory for my older assignments for the UT Web Development Boot Camp
