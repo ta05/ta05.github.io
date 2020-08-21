@@ -85,9 +85,7 @@ const skeleton = `#  ${title}
 
 [![License](https://img.shields.io/badge/license-${license}-green.svg)](https://shields.io/)
 
-## Site
-
--   ${url}
+${url}
 
 ## Description
 
