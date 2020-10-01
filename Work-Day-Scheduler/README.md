@@ -2,7 +2,7 @@
 
 ## Description
 
-The Work Day Scheduler Assignment was to create a website where the user is presented with a daily planner interface. The planner is segmented into hour blocks and color-coded for past, present and future hours. The events will have been saved and displayed.
+The Work Day Scheduler is a daily planner interface. The planner is segmented into hour blocks and color-coded for past, present and future hours. The events will have been saved and displayed.
 
 When the user opens up the website
 Then the user is presented with a daily schedule interface with today's date.
