@@ -2,7 +2,7 @@
 
 ## Description
 
-The Work Day Scheduler Assignment was to create a website where the user is weather dashboard interface using the [OpenWeather API](https://openweathermap.org/api). The user is able to search for cities, and the site updates with current conditions and a 5-day forecast
+The Weather Dashboard is a dashboard interface using the [OpenWeather API](https://openweathermap.org/api). The user is able to search for cities, and the site updates with current conditions and a 5-day forecast
 
 
 When the user opens up the website
